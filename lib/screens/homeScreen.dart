@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'qrGenerateScreen.dart';
+import 'qrScanScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -31,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Colors.orange[300],
                     ],
                   ),
-                  borderRadius: new BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(0),
                     topRight: Radius.circular(25),
                     bottomLeft: Radius.circular(0),
@@ -44,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 60.0,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: new BorderRadius.only(
+                    borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(25),
                       topRight: Radius.circular(25),
                       bottomLeft: Radius.circular(25),
@@ -69,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Colors.blue[300],
                     ],
                   ),
-                  borderRadius: new BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(25),
                     topRight: Radius.circular(0),
                     bottomLeft: Radius.circular(25),
@@ -85,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 75.0,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: new BorderRadius.only(
+                        borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25),
                           topRight: Radius.circular(25),
                           bottomLeft: Radius.circular(25),
@@ -94,9 +98,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: IconButton(
                         icon: Icon(
-                          Icons.person,
+                          Icons.arrow_upward,
                           size: 30.0,
                         ),
+                        onPressed: () {},
                       ),
                     ),
                     Container(
@@ -104,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 75.0,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: new BorderRadius.only(
+                        borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25),
                           topRight: Radius.circular(25),
                           bottomLeft: Radius.circular(25),
@@ -113,9 +118,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: IconButton(
                         icon: Icon(
-                          Icons.person,
+                          Icons.arrow_downward,
                           size: 30.0,
                         ),
+                        onPressed: () {},
                       ),
                     ),
                     Container(
@@ -123,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 75.0,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: new BorderRadius.only(
+                        borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25),
                           topRight: Radius.circular(25),
                           bottomLeft: Radius.circular(25),
@@ -132,9 +138,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: IconButton(
                         icon: Icon(
-                          Icons.person,
+                          FontAwesomeIcons.qrcode,
                           size: 30.0,
                         ),
+                        onPressed: () {
+                          Navigator.of(context).push(new MaterialPageRoute(
+                              builder: (BuildContext context) {
+                            return QRScanScreen();
+                          }));
+                        },
                       ),
                     ),
                   ],

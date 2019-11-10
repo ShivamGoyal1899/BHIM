@@ -4,16 +4,16 @@ import 'package:local_auth/local_auth.dart';
 import 'homePage.dart';
 import 'package:flutter/services.dart';
 
-class PassCodeScreen extends StatefulWidget {
-  PassCodeScreen({Key key, this.title}) : super(key: key);
+class AppLockScreen extends StatefulWidget {
+  AppLockScreen({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _PassCodeScreenState createState() => new _PassCodeScreenState();
+  _AppLockScreenState createState() => new _AppLockScreenState();
 }
 
-class _PassCodeScreenState extends State<PassCodeScreen> {
+class _AppLockScreenState extends State<AppLockScreen> {
   bool isFingerprint = false;
 
   Future<Null> biometrics() async {

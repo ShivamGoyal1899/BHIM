@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'historyScreen.dart';
+import 'homeScreen.dart';
 import 'voiceScreen.dart';
 import 'profileScreen.dart';
 
@@ -8,43 +10,42 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-//  PageController _myPage = PageController(initialPage: 0);
+  PageController _myPage = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 //      appBar: AppBar(
-//        title: Text('BHIM UPI'),
+//        title: Text('BHIM'),
 //        centerTitle: true,
 //      ),
-//      body: PageView(
-//        controller: _myPage,
-//        children: <Widget>[
-//          Center(
-//            child: Container(
-//              child: ProfileScreen(),
-//            ),
-//          ),
-//          Center(
-//            child: Container(
-//              child: ProfileScreen(),
-//            ),
-//          ),
-//          Center(
-//            child: Container(
-//              child: ProfileScreen(),
-//            ),
-//          ),
-//          Center(
-//            child: Container(
-//              child: ProfileScreen(),
-//            ),
-//          ),
-//        ],
-//        physics:
-//            NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
-//      ),
-      body: ProfileScreen(),
+      body: PageView(
+        controller: _myPage,
+        children: <Widget>[
+          Center(
+            child: Container(
+              child: HomeScreen(),
+            ),
+          ),
+          Center(
+            child: Container(
+              child: HistoryScreen(),
+            ),
+          ),
+          Center(
+            child: Container(
+              child: ProfileScreen(),
+            ),
+          ),
+          Center(
+            child: Container(
+              child: ProfileScreen(),
+            ),
+          ),
+        ],
+        physics:
+            NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
+      ),
       floatingActionButton: FloatingActionButton(
         elevation: 8.0,
         child: Icon(
@@ -75,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   icon: Icon(Icons.home),
                   onPressed: () {
                     setState(() {
-//                      _myPage.jumpToPage(0);
+                      _myPage.jumpToPage(0);
                     });
                   },
                 ),
@@ -84,7 +85,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 6.0,
                   decoration: BoxDecoration(
 //                    color: _myPage.page == 0 ? Colors.blue : Colors.transparent,
-                    color: Colors.blue,
                     borderRadius: new BorderRadius.only(
                       topLeft: Radius.circular(16),
                       topRight: Radius.circular(16),
@@ -103,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   icon: Icon(Icons.history),
                   onPressed: () {
                     setState(() {
-//                      _myPage.jumpToPage(1);
+                      _myPage.jumpToPage(1);
                     });
                   },
                 ),
@@ -131,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   icon: Icon(Icons.attach_money),
                   onPressed: () {
                     setState(() {
-//                      _myPage.jumpToPage(2);
+                      _myPage.jumpToPage(2);
                     });
                   },
                 ),
@@ -158,7 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   icon: Icon(Icons.person),
                   onPressed: () {
                     setState(() {
-//                      _myPage.jumpToPage(3);
+                      _myPage.jumpToPage(3);
                     });
                   },
                 ),

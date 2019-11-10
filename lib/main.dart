@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:upi/screens/appLockScreen.dart';
+import 'screens/appLockScreen.dart';
 
 Future main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Quicksand'
       ),
-      home: PassCodeScreen(title: 'BHIM'),
+      home: AppLockScreen(title: 'BHIM'),
     );
   }
 }

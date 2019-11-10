@@ -1,6 +1,15 @@
+import 'package:BHIM/screens/deviceInfoScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'qrFullScreen.dart';
+
+var mobileNumber = '9012218994';
+var firstName = 'Shivam';
+var lastName = 'Goyal';
+var upiID = mobileNumber + '@upi';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -8,244 +17,269 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool _lights = true;
-
-  _launchUrlIssue() async {
-    const url =
-        'mailto:dev@bhimupi.org.in/?subject=Report%20Issue%20with%20BHIM%20UPI%20App';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  _launchUrlWebsite() async {
-    const url = 'https://www.bhimupi.org.in/';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+          title: Text(
+            'Profile & Settings',
+            style: TextStyle(
+                fontSize: 22.0,
+                fontWeight: FontWeight.w700,
+                color: Colors.black),
+          ),
+          backgroundColor: Colors.white,
+          elevation: 0.0,
+          centerTitle: true,
+        ),
+      ),
       backgroundColor: Colors.white,
       body: ListView(
         children: <Widget>[
-          SizedBox(height: 40.0),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 15.0),
-            alignment: Alignment.center,
-            child: CircleAvatar(
-              foregroundColor: Theme.of(context).primaryColor,
-              backgroundColor: Colors.grey,
-              backgroundImage:
-                  NetworkImage('https://ieitiet.co/images/avatars/shivam.jpg'),
-              radius: 60.0,
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context)
+                  .push(new MaterialPageRoute(builder: (BuildContext context) {
+                return QRFullScreen();
+              }));
+            },
+            child: Container(
+              width: 150.0,
+              height: 150.0,
+              alignment: Alignment.center,
+              child: QrImage(
+                data:
+                    'upi://pay?pa=$mobileNumber@upi&pn=$firstName $lastName&cu=INR&mode=02&purpose=00&orgid=189999&sign=MEQCHxuGu2MuYK7KM+73lS5q+4iUq8qxigXBJHCv+NeMyVsCIQClwuqF8p0T0kcHZqQKafyea+AF6rzuk45UFhW8+KCfAg==',
+              ),
             ),
           ),
           Container(
             child: Column(
               children: <Widget>[
                 Text(
-                  'Shivam Goyal',
+                  '$upiID',
                   style: TextStyle(
-                    fontSize: 36.0,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w600),
                 ),
                 SizedBox(height: 2.0),
                 Text(
-                  '9012218994@upi',
+                  '$firstName $lastName',
                   style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.grey.shade400,
-                      fontWeight: FontWeight.w600),
+                    fontSize: 36.0,
+                    fontWeight: FontWeight.w500,
+                  ),
                 )
               ],
             ),
           ),
-          SizedBox(height: 40.0),
+          SizedBox(height: 20.0),
+          Divider(
+            height: 0.0,
+            color: Colors.black,
+          ),
           ListTile(
-            contentPadding:
-                EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
-            title: Text(
-              "USSD Service (*99#)",
-              style: TextStyle(fontSize: 16.0, color: Colors.black),
+            title: Text('ACCOUNT',
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16.0)),
+          ),
+          ListTile(
+            leading: IconButton(icon: Icon(Icons.phone)),
+            title: Text("Mobile mumber"),
+            subtitle: Text('+91 90122 18994'),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.black,
+                size: 16.0,
+              ),
+              onPressed: null,
             ),
+          ),
+          ListTile(
+            leading: IconButton(icon: Icon(Icons.backup)),
+            title: Text("Payment Methods"),
+            subtitle: Text('Paytm Payments Bank XX94'),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.black,
+                size: 16.0,
+              ),
+              onPressed: null,
+            ),
+          ),
+          ListTile(
+            leading: IconButton(icon: Icon(Icons.language)),
+            title: Text("Language"),
+            subtitle: Text('English'),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.black,
+                size: 16.0,
+              ),
+              onPressed: null,
+            ),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: IconButton(icon: Icon(Icons.sim_card)),
+            title: Text("USSD Service (*99#)"),
             subtitle: Text(
-              'Using *99# service, a user can access financial services by dialing *99# frim his/her mobile registered with the bank.',
-              style: TextStyle(fontSize: 12.0),
+                'Using *99# service, a user can access financial services by dialing *99# frim his/her mobile registered with the bank.'),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.black,
+                size: 16.0,
+              ),
+              onPressed: null,
             ),
-            trailing: CupertinoSwitch(
-              value: _lights,
-              onChanged: (bool value) {
-                setState(() {
-                  _lights = value;
-                });
-              },
-            ),
-            onTap: () {
-              setState(() {
-                _lights = !_lights;
-              });
-            },
-          ),
-          Container(
-            alignment: Alignment.centerRight,
-            child: Divider(
-              height: 0.0,
-              color: Colors.black,
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 25.0),
           ),
           ListTile(
-            contentPadding:
-                EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
-            title: Text(
-              "Notifications",
-              style: TextStyle(fontSize: 16.0, color: Colors.black),
+            leading: IconButton(icon: Icon(Icons.card_giftcard)),
+            title: Text("Rewardz"),
+            subtitle: Text('Coming Soon'),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.black,
+                size: 16.0,
+              ),
+              onPressed: null,
             ),
-            subtitle: Text(
-              'Turn notifications on/off',
-              style: TextStyle(fontSize: 12.0),
-            ),
-            trailing: CupertinoSwitch(
-              value: _lights,
-              onChanged: (bool value) {
-                setState(() {
-                  _lights = value;
-                });
-              },
-            ),
-            onTap: () {
-              setState(() {
-                _lights = !_lights;
-              });
-            },
+            onTap: () {},
           ),
-          Container(
-            alignment: Alignment.centerRight,
-            child: Divider(
-              height: 0.0,
-              color: Colors.black,
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 25.0),
+          Divider(
+            height: 0.0,
+            color: Colors.black,
           ),
           ListTile(
-            contentPadding:
-                EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
-            title: Text(
-              "Your Rewardz",
-              style: TextStyle(fontSize: 16.0, color: Colors.black),
-            ),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(
-                  "Coming Soon",
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.grey.shade400,
-                      fontWeight: FontWeight.w600),
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.black,
-                    size: 16.0,
-                  ),
-                  onPressed: null,
-                ),
-              ],
-            ),
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text("Rewardz"),
-                    content: Text("Coming Soon"),
-                  );
-                },
-              );
-            },
-          ),
-          Container(
-            alignment: Alignment.centerRight,
-            child: Divider(
-              height: 0.0,
-              color: Colors.black,
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 25.0),
-          ),
-          Container(
-            alignment: Alignment.centerRight,
-            child: Divider(
-              height: 0.0,
-              color: Colors.black,
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 25.0),
+            title: Text('PRIVACY & SECURITY',
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16.0)),
           ),
           ListTile(
-            contentPadding:
-                EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
-            title: Text(
-              "Language",
-              style: TextStyle(fontSize: 16.0, color: Colors.black),
+            leading: IconButton(icon: Icon(Icons.security)),
+            title: Text("Privacy"),
+            subtitle: Text('Sharing & visibility'),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.black,
+                size: 16.0,
+              ),
+              onPressed: null,
             ),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(
-                  "English",
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.grey.shade400,
-                      fontWeight: FontWeight.w600),
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.black,
-                    size: 16.0,
-                  ),
-                  onPressed: null,
-                ),
-              ],
-            ),
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text("Language"),
-                    content: Text(
-                        "Currently, BHIM UPI app is only available in English(IN) only. More languages will be added soon."),
-                  );
-                },
-              );
-            },
-          ),
-          Container(
-            alignment: Alignment.centerRight,
-            child: Divider(
-              height: 0.0,
-              color: Colors.black,
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 25.0),
+            onTap: () {},
           ),
           ListTile(
-            contentPadding:
-                EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
-            title: Text(
-              "Report Issue",
-              style: TextStyle(fontSize: 16.0, color: Colors.black),
+            leading: IconButton(icon: Icon(Icons.notifications_none)),
+            title: Text("Notifications"),
+            subtitle: Text('Turn notifications on/off'),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.black,
+                size: 16.0,
+              ),
+              onPressed: null,
             ),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: IconButton(icon: Icon(Icons.lock_outline)),
+            title: Text("Security"),
+            subtitle: Text('Secure lock'),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.black,
+                size: 16.0,
+              ),
+              onPressed: null,
+            ),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: IconButton(icon: Icon(Icons.exit_to_app)),
+            title: Text("Logout"),
+            subtitle: Text('Logout from BHIM'),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.black,
+                size: 16.0,
+              ),
+              onPressed: null,
+            ),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: IconButton(icon: Icon(Icons.power_settings_new)),
+            title: Text("Degister"),
+            subtitle: Text('Clear BHIM UPI profile on this device'),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.black,
+                size: 16.0,
+              ),
+              onPressed: null,
+            ),
+            onTap: () {},
+          ),
+          Divider(
+            height: 0.0,
+            color: Colors.black,
+          ),
+          ListTile(
+            title: Text('INFORMATION',
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16.0)),
+          ),
+          ListTile(
+            leading: IconButton(icon: Icon(Icons.help_outline)),
+            title: Text("Help & Feedback"),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.black,
+                size: 16.0,
+              ),
+              onPressed: null,
+            ),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: IconButton(icon: Icon(Icons.assignment)),
+            title: Text("Terms, privacy policy and licences"),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.black,
+                size: 16.0,
+              ),
+              onPressed: null,
+            ),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: IconButton(icon: Icon(Icons.info_outline)),
+            title: Text("Version 1.1.0"),
+          ),
+          Divider(
+            height: 0.0,
+            color: Colors.black,
+          ),
+          ListTile(
+            title: Text('DEV FEATURES',
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16.0)),
+          ),
+          ListTile(
+            leading: IconButton(icon: Icon(Icons.perm_device_information)),
+            title: Text("Device Info"),
+            subtitle: Text('View handset information'),
             trailing: IconButton(
               icon: Icon(
                 Icons.arrow_forward_ios,
@@ -255,82 +289,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onPressed: null,
             ),
             onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text("Report Issue"),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text(
-                            "If you are facing any issue while using BHIM UPI App, please mail us over.\n"),
-                        GestureDetector(
-                          child: Text(
-                            "dev@bhimupi.org.in",
-                            style: TextStyle(color: Colors.blue),
-                          ),
-                          onTap: () {
-                            _launchUrlIssue();
-                          },
-                        )
-                      ],
-                    ),
-                  );
-                },
-              );
+              Navigator.of(context)
+                  .push(new MaterialPageRoute(builder: (BuildContext context) {
+                return DeviceInfoScreen();
+              }));
             },
           ),
-          Container(
-            alignment: Alignment.centerRight,
-            child: Divider(
-              height: 0.0,
-              color: Colors.black,
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 25.0),
-          ),
-          ListTile(
-            contentPadding:
-                EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
-            title: Text(
-              "About BHIM UPI",
-              style: TextStyle(fontSize: 16.0, color: Colors.black),
-            ),
-            trailing: IconButton(
-              icon: Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.black,
-                size: 16.0,
-              ),
-              onPressed: null,
-            ),
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text("About BHIM UPI"),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text(
-                            "Bharat Interface for Money (BHIM) is a payment app that lets you make simple, easy and quick transactions using Unified Payments Interface (UPI). You can make direct bank payments to anyone on UPI using their UPI ID or scanning their QR with the BHIM app. You can also request money through the app from a UPI ID.\n\nPioneered and developed by National Payments Corporation of India (NPCI), BHIM has been conceived and launched by the Hon'ble Prime Minister of India, Narendra Modi on 30th December 2016 to bring in Financial Inclusion to the nation and a digitally empowered society."),
-                        GestureDetector(
-                          child: Text(
-                            "\nVisit BHIM UPI Website",
-                            style: TextStyle(color: Colors.blue),
-                          ),
-                          onTap: () {
-                            _launchUrlWebsite();
-                          },
-                        )
-                      ],
-                    ),
-                  );
-                },
-              );
-            },
-          )
+          SizedBox(height: 20.0),
         ],
       ),
     );

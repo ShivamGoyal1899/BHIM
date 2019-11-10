@@ -44,5 +44,8 @@
 	<!-- flutter_lock_screen -->
 	<key>NSFaceIDUsageDescription</key>
     <string>Why is my app authenticating using face id?</string>
+    <!-- barcode_scan -->
+    <key>NSCameraUsageDescription</key>
+    <string>Camera permission is required for barcode scanning.</string>
 </dict>
 </plist>
