@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'screens/profileScreen.dart';
-import 'screens/homeScreen.dart';
+import 'package:upi/screens/appLockScreen.dart';
 
 Future main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -13,12 +12,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'UPI',
+      title: 'BHIM',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         fontFamily: 'Quicksand'
       ),
-      home: MyHomePage(),
+      home: PassCodeScreen(title: 'BHIM'),
     );
   }
 }

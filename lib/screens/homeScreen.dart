@@ -1,179 +1,149 @@
 import 'package:flutter/material.dart';
-import 'profileScreen.dart';
-import 'realHomeScreen.dart';
 
-class MyHomePage extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-//  PageController _myPage = PageController(initialPage: 0);
-
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      appBar: AppBar(
-//        title: Text('BHIM UPI'),
-//        centerTitle: true,
-//      ),
-//      body: PageView(
-//        controller: _myPage,
-//        children: <Widget>[
-//          Center(
-//            child: Container(
-//              child: ProfileScreen(),
-//            ),
-//          ),
-//          Center(
-//            child: Container(
-//              child: ProfileScreen(),
-//            ),
-//          ),
-//          Center(
-//            child: Container(
-//              child: ProfileScreen(),
-//            ),
-//          ),
-//          Center(
-//            child: Container(
-//              child: ProfileScreen(),
-//            ),
-//          ),
-//        ],
-//        physics:
-//            NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
-//      ),
-      body: HomeScreen(),
-      floatingActionButton: FloatingActionButton(
-        elevation: 8.0,
-        child: Icon(
-          Icons.mic_none,
-          size: 25,
-        ),
-        onPressed: () {},
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
-        notchMargin: 0,
-        elevation: 8.0,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.home),
-                  onPressed: () {
-                    setState(() {
-//                      _myPage.jumpToPage(0);
-                    });
-                  },
-                ),
-                Container(
-                  width: 45.0,
-                  height: 6.0,
-                  decoration: BoxDecoration(
-//                    color: _myPage.page == 0 ? Colors.blue : Colors.transparent,
-                    color: Colors.blue,
-                    borderRadius: new BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16),
-                      bottomLeft: Radius.circular(0),
-                      bottomRight: Radius.circular(0),
-                    ),
+      backgroundColor: Colors.white,
+      body: ListView(
+        padding: EdgeInsets.only(top: 40.0),
+        children: <Widget>[
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomRight,
+                    end: Alignment.topLeft,
+                    stops: [0.1, 0.3, 0.7, 0.9],
+                    colors: [
+                      Colors.green[900],
+                      Colors.green[700],
+                      Colors.orange[500],
+                      Colors.orange[300],
+                    ],
+                  ),
+                  borderRadius: new BorderRadius.only(
+                    topLeft: Radius.circular(0),
+                    topRight: Radius.circular(25),
+                    bottomLeft: Radius.circular(0),
+                    bottomRight: Radius.circular(25),
                   ),
                 ),
-              ],
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.history),
-                  onPressed: () {
-                    setState(() {
-//                      _myPage.jumpToPage(1);
-                    });
-                  },
-                ),
-                Container(
-                  width: 45.0,
-                  height: 6.0,
+                child: Container(
+                  padding: EdgeInsets.all(8.0),
+                  height: 60.0,
+                  width: 60.0,
                   decoration: BoxDecoration(
-//                    color: _myPage.page == 1 ? Colors.blue : Colors.transparent,
+                    color: Colors.white,
                     borderRadius: new BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16),
-                      bottomLeft: Radius.circular(0),
-                      bottomRight: Radius.circular(0),
+                      topLeft: Radius.circular(25),
+                      topRight: Radius.circular(25),
+                      bottomLeft: Radius.circular(25),
+                      bottomRight: Radius.circular(25),
                     ),
                   ),
+                  child: Image.asset('assets/images/logo.png'),
                 ),
-              ],
-            ),
-            SizedBox(width: 80),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.attach_money),
-                  onPressed: () {
-                    setState(() {
-//                      _myPage.jumpToPage(2);
-                    });
-                  },
-                ),
-                Container(
-                  width: 45.0,
-                  height: 6.0,
-                  decoration: BoxDecoration(
-//                    color: _myPage.page == 2 ? Colors.blue : Colors.transparent,
-                    borderRadius: new BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16),
-                      bottomLeft: Radius.circular(0),
-                      bottomRight: Radius.circular(0),
-                    ),
+              ),
+              Container(
+                padding: EdgeInsets.all(15.0),
+                width: MediaQuery.of(context).size.width * 0.75,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    stops: [0.1, 0.5, 0.7, 0.9],
+                    colors: [
+                      Colors.blue[900],
+                      Colors.blue[700],
+                      Colors.blue[500],
+                      Colors.blue[300],
+                    ],
+                  ),
+                  borderRadius: new BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(0),
+                    bottomLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(0),
                   ),
                 ),
-              ],
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.person),
-                  onPressed: () {
-                    setState(() {
-//                      _myPage.jumpToPage(3);
-                    });
-                  },
-                ),
-                Container(
-                  width: 45.0,
-                  height: 6.0,
-                  decoration: BoxDecoration(
-//                    color: _myPage.page == 3 ? Colors.blue : Colors.transparent,
-                    borderRadius: new BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16),
-                      bottomLeft: Radius.circular(0),
-                      bottomRight: Radius.circular(0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Container(
+                      height: 75.0,
+                      width: 75.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25),
+                          bottomLeft: Radius.circular(25),
+                          bottomRight: Radius.circular(25),
+                        ),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.person,
+                          size: 30.0,
+                        ),
+                      ),
                     ),
-                  ),
+                    Container(
+                      height: 75.0,
+                      width: 75.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25),
+                          bottomLeft: Radius.circular(25),
+                          bottomRight: Radius.circular(25),
+                        ),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.person,
+                          size: 30.0,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 75.0,
+                      width: 75.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25),
+                          bottomLeft: Radius.circular(25),
+                          bottomRight: Radius.circular(25),
+                        ),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.person,
+                          size: 30.0,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+          SizedBox(height: 200),
+        ],
       ),
     );
   }

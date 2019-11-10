@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -74,8 +74,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
             contentPadding:
                 EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
             title: Text(
+              "USSD Service (*99#)",
+              style: TextStyle(fontSize: 16.0, color: Colors.black),
+            ),
+            subtitle: Text(
+              'Using *99# service, a user can access financial services by dialing *99# frim his/her mobile registered with the bank.',
+              style: TextStyle(fontSize: 12.0),
+            ),
+            trailing: CupertinoSwitch(
+              value: _lights,
+              onChanged: (bool value) {
+                setState(() {
+                  _lights = value;
+                });
+              },
+            ),
+            onTap: () {
+              setState(() {
+                _lights = !_lights;
+              });
+            },
+          ),
+          Container(
+            alignment: Alignment.centerRight,
+            child: Divider(
+              height: 0.0,
+              color: Colors.black,
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 25.0),
+          ),
+          ListTile(
+            contentPadding:
+                EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
+            title: Text(
               "Notifications",
               style: TextStyle(fontSize: 16.0, color: Colors.black),
+            ),
+            subtitle: Text(
+              'Turn notifications on/off',
+              style: TextStyle(fontSize: 12.0),
             ),
             trailing: CupertinoSwitch(
               value: _lights,
