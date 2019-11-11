@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'profileScreen.dart';
+import 'package:screenshot_and_share/screenshot_share.dart';
+import 'settingsScreen.dart';
 
 class QRFullScreen extends StatefulWidget {
   @override
@@ -8,10 +9,23 @@ class QRFullScreen extends StatefulWidget {
 }
 
 class _QRFullScreenState extends State<QRFullScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        foregroundColor: Colors.blue,
+        backgroundColor: Colors.white,
+        elevation: 4.0,
+        icon: Icon(Icons.share, size: 25),
+        label: Text(
+          'Share QR Code',
+          style: TextStyle(fontSize: 16.0),
+        ),
+        onPressed: () {
+          ScreenshotShare.takeScreenshotAndShare();
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: SizedBox.expand(
         child: Container(
           child: Stack(
@@ -19,11 +33,12 @@ class _QRFullScreenState extends State<QRFullScreen> {
               Align(
                 alignment: Alignment.center,
                 child: Hero(
-                  tag: 'upi://pay?pa=$mobileNumber@upi&pn=$firstName $lastName&cu=INR&mode=02&purpose=00&orgid=189999&sign=MEQCHxuGu2MuYK7KM+73lS5q+4iUq8qxigXBJHCv+NeMyVsCIQClwuqF8p0T0kcHZqQKafyea+AF6rzuk45UFhW8+KCfAg==',
+                  tag:
+                      'upi://pay?pa=$mobileNumber@upi&pn=$firstName $lastName&cu=INR&mode=02&purpose=00&orgid=189999&sign=MEQCHxuGu2MuYK7KM+73lS5q+4iUq8qxigXBJHCv+NeMyVsCIQClwuqF8p0T0kcHZqQKafyea+AF6rzuk45UFhW8+KCfAg==',
                   child: QrImage(
                     padding: EdgeInsets.all(50.0),
                     data:
-                    'upi://pay?pa=$mobileNumber@upi&pn=$firstName $lastName&cu=INR&mode=02&purpose=00&orgid=189999&sign=MEQCHxuGu2MuYK7KM+73lS5q+4iUq8qxigXBJHCv+NeMyVsCIQClwuqF8p0T0kcHZqQKafyea+AF6rzuk45UFhW8+KCfAg==',
+                        'upi://pay?pa=$mobileNumber@upi&pn=$firstName $lastName&cu=INR&mode=02&purpose=00&orgid=189999&sign=MEQCHxuGu2MuYK7KM+73lS5q+4iUq8qxigXBJHCv+NeMyVsCIQClwuqF8p0T0kcHZqQKafyea+AF6rzuk45UFhW8+KCfAg==',
                   ),
                 ),
               ),

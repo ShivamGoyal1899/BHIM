@@ -1,38 +1,40 @@
+import 'package:BHIM/components/appBar.dart';
 import 'package:BHIM/screens/deviceInfoScreen.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:BHIM/screens/languageScreen.dart';
+import 'package:BHIM/screens/ussdServiceScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import 'notificationsScreen.dart';
+import 'paymentMethodsScreen.dart';
+import 'privacyScreen.dart';
 import 'qrFullScreen.dart';
+import 'qrGenerateScreen.dart';
+import 'securityScreen.dart';
 
 var mobileNumber = '9012218994';
 var firstName = 'Shivam';
 var lastName = 'Goyal';
 var upiID = mobileNumber + '@upi';
 
-class ProfileScreen extends StatefulWidget {
+class SettingsScreen extends StatefulWidget {
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  _SettingsScreenState createState() => _SettingsScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50.0),
-        child: AppBar(
-          title: Text(
-            'Profile & Settings',
-            style: TextStyle(
-                fontSize: 22.0,
-                fontWeight: FontWeight.w700,
-                color: Colors.black),
+      appBar: TopBar(
+        title: 'Settings',
+        child: Container(
+          child: CircleAvatar(
+            radius: 17.0,
+            backgroundImage: AssetImage('assets/images/logo.png'),
+            backgroundColor: Colors.transparent,
           ),
-          backgroundColor: Colors.white,
-          elevation: 0.0,
-          centerTitle: true,
         ),
       ),
       backgroundColor: Colors.white,
@@ -60,9 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: <Widget>[
                 Text(
                   '$upiID',
-                  style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
                 ),
                 SizedBox(height: 2.0),
                 Text(
@@ -88,14 +88,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             leading: IconButton(icon: Icon(Icons.phone)),
             title: Text("Mobile mumber"),
             subtitle: Text('+91 90122 18994'),
-            trailing: IconButton(
-              icon: Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.black,
-                size: 16.0,
-              ),
-              onPressed: null,
-            ),
           ),
           ListTile(
             leading: IconButton(icon: Icon(Icons.backup)),
@@ -109,6 +101,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               onPressed: null,
             ),
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return PaymentMethodsScreen();
+              }));
+            },
           ),
           ListTile(
             leading: IconButton(icon: Icon(Icons.language)),
@@ -122,13 +120,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               onPressed: null,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return LanguageScreen();
+              }));
+            },
           ),
           ListTile(
             leading: IconButton(icon: Icon(Icons.sim_card)),
-            title: Text("USSD Service (*99#)"),
-            subtitle: Text(
-                'Using *99# service, a user can access financial services by dialing *99# frim his/her mobile registered with the bank.'),
+            title: Text("USSD Service"),
+            subtitle: Text('*99#'),
             trailing: IconButton(
               icon: Icon(
                 Icons.arrow_forward_ios,
@@ -137,20 +139,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               onPressed: null,
             ),
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return USSDServiceScreen();
+              }));
+            },
           ),
           ListTile(
             leading: IconButton(icon: Icon(Icons.card_giftcard)),
             title: Text("Rewardz"),
             subtitle: Text('Coming Soon'),
-            trailing: IconButton(
-              icon: Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.black,
-                size: 16.0,
-              ),
-              onPressed: null,
-            ),
-            onTap: () {},
           ),
           Divider(
             height: 0.0,
@@ -172,7 +171,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               onPressed: null,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return PrivacyScreen();
+              }));
+            },
           ),
           ListTile(
             leading: IconButton(icon: Icon(Icons.notifications_none)),
@@ -186,7 +190,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               onPressed: null,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return NotificationsScreen();
+              }));
+            },
           ),
           ListTile(
             leading: IconButton(icon: Icon(Icons.lock_outline)),
@@ -200,34 +209,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               onPressed: null,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return SecurityScreen();
+              }));
+            },
           ),
           ListTile(
             leading: IconButton(icon: Icon(Icons.exit_to_app)),
             title: Text("Logout"),
             subtitle: Text('Logout from BHIM'),
-            trailing: IconButton(
-              icon: Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.black,
-                size: 16.0,
-              ),
-              onPressed: null,
-            ),
             onTap: () {},
           ),
           ListTile(
             leading: IconButton(icon: Icon(Icons.power_settings_new)),
             title: Text("Degister"),
             subtitle: Text('Clear BHIM UPI profile on this device'),
-            trailing: IconButton(
-              icon: Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.black,
-                size: 16.0,
-              ),
-              onPressed: null,
-            ),
             onTap: () {},
           ),
           Divider(
@@ -290,8 +288,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             onTap: () {
               Navigator.of(context)
-                  .push(new MaterialPageRoute(builder: (BuildContext context) {
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
                 return DeviceInfoScreen();
+              }));
+            },
+          ),
+          ListTile(
+            leading: IconButton(icon: Icon(FontAwesomeIcons.qrcode)),
+            title: Text("Generate QR Code"),
+            subtitle: Text('QR Code for any data'),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.black,
+                size: 16.0,
+              ),
+              onPressed: null,
+            ),
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return QRGenerateScreen();
               }));
             },
           ),

@@ -1,12 +1,14 @@
 import 'dart:async';
 
+import 'package:BHIM/components/appBar.dart';
+import 'package:BHIM/components/constant.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class QRScanScreen extends StatefulWidget {
   @override
-  _ScanState createState() => new _ScanState();
+  _ScanState createState() => _ScanState();
 }
 
 class _ScanState extends State<QRScanScreen> {
@@ -20,11 +22,15 @@ class _ScanState extends State<QRScanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: new AppBar(
-          title: new Text('QR Code Scanner'),
+        appBar: TopBar(
+          title: 'QR Code Scanner',
+          child: kBackBtn,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
-        body: new Center(
-          child: new Column(
+        body: Center(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -35,15 +41,15 @@ class _ScanState extends State<QRScanScreen> {
                     textColor: Colors.white,
                     splashColor: Colors.blueGrey,
                     onPressed: scan,
-                    child: const Text('START CAMERA SCAN')
-                ),
-              )
-              ,
+                    child: const Text('Pay Now')),
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Text(barcode, textAlign: TextAlign.center,),
-              )
-              ,
+                child: Text(
+                  barcode,
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ],
           ),
         ));
@@ -61,8 +67,9 @@ class _ScanState extends State<QRScanScreen> {
       } else {
         setState(() => this.barcode = 'Unknown error: $e');
       }
-    } on FormatException{
-      setState(() => this.barcode = 'null (User returned using the "back"-button before scanning anything. Result)');
+    } on FormatException {
+      setState(() => this.barcode =
+          'null (User returned using the "back"-button before scanning anything. Result)');
     } catch (e) {
       setState(() => this.barcode = 'Unknown error: $e');
     }

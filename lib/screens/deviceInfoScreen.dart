@@ -1,5 +1,6 @@
+import 'package:BHIM/components/appBar.dart';
+import 'package:BHIM/components/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:android_device_info/android_device_info.dart';
 import '../components/row_item.dart';
 
@@ -48,20 +49,12 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50.0),
-        child: AppBar(
-          title: Text(
-            'Device Info',
-            style: TextStyle(
-                fontSize: 22.0,
-                fontWeight: FontWeight.w700,
-                color: Colors.black),
-          ),
-          backgroundColor: Colors.white,
-          elevation: 0.0,
-          centerTitle: true,
-        ),
+      appBar: TopBar(
+        title: 'Device Info',
+        child: kBackBtn,
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
       ),
       body: Container(
         alignment: Alignment.center,
@@ -89,9 +82,10 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
               RowItem('Multi SIM', '${data['isMultiSim']}'),
               RowItem('Active SIM(s)', '${data['numberOfActiveSim']}'),
               Divider(),
-              RowItem(
-                  'Fingerprint Sensor', '${data['isFingerprintSensorPresent']}'),
-              RowItem('Fingerprints Enrolled', '${data['areFingerprintsEnrolled']}'),
+              RowItem('Fingerprint Sensor',
+                  '${data['isFingerprintSensorPresent']}'),
+              RowItem('Fingerprints Enrolled',
+                  '${data['areFingerprintsEnrolled']}'),
               Divider(),
               RowItem('Model', data['model']),
               RowItem('Product', data['product']),
@@ -118,7 +112,8 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
               RowItem('Build Brand', data['buildBrand']),
               RowItem('Build Host', data['buildHost']),
               RowItem('Build Tags', data['buildTags']),
-              RowItem('Build Version Incremental', data['buildVersionIncremental']),
+              RowItem(
+                  'Build Version Incremental', data['buildVersionIncremental']),
               RowItem('Build User', data['buildUser']),
               RowItem('Build Version Release', data['buildVersionRelease']),
               Divider(),

@@ -13,10 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BHIM',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Quicksand'
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Quicksand'),
       home: AppLockScreen(title: 'BHIM'),
     );
   }

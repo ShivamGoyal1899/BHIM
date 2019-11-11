@@ -1,8 +1,9 @@
+import 'package:BHIM/screens/accountsScreen.dart';
 import 'package:flutter/material.dart';
-import 'historyScreen.dart';
+import 'TransactionHistoryScreen.dart';
 import 'homeScreen.dart';
-import 'voiceScreen.dart';
-import 'profileScreen.dart';
+import 'voicePayScreen.dart';
+import 'settingsScreen.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -15,10 +16,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      appBar: AppBar(
-//        title: Text('BHIM'),
-//        centerTitle: true,
-//      ),
       body: PageView(
         controller: _myPage,
         children: <Widget>[
@@ -29,17 +26,17 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Center(
             child: Container(
-              child: HistoryScreen(),
+              child: TransactionHistoryScreen(),
             ),
           ),
           Center(
             child: Container(
-              child: ProfileScreen(),
+              child: AccountsScreen(),
             ),
           ),
           Center(
             child: Container(
-              child: ProfileScreen(),
+              child: SettingsScreen(),
             ),
           ),
         ],
@@ -47,14 +44,14 @@ class _MyHomePageState extends State<MyHomePage> {
             NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
       ),
       floatingActionButton: FloatingActionButton(
-        elevation: 8.0,
+        elevation: 4.0,
         child: Icon(
           Icons.mic_none,
           size: 25,
         ),
         onPressed: () {
-          Navigator.of(context).push(
-              new MaterialPageRoute(builder: (BuildContext context) {
+          Navigator.of(context)
+              .push(new MaterialPageRoute(builder: (BuildContext context) {
             return VoiceScreen();
           }));
         },
@@ -62,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
-        notchMargin: 0,
+        notchMargin: 8.0,
         elevation: 8.0,
         child: Row(
           mainAxisSize: MainAxisSize.max,
