@@ -224,7 +224,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           ListTile(
             leading: IconButton(icon: Icon(Icons.power_settings_new)),
-            title: Text("Degister"),
+            title: Text("Deregister"),
             subtitle: Text('Clear BHIM UPI profile on this device'),
             onTap: () {},
           ),

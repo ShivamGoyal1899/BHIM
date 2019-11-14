@@ -2,7 +2,7 @@ import 'package:BHIM/screens/accountsScreen.dart';
 import 'package:flutter/material.dart';
 import 'TransactionHistoryScreen.dart';
 import 'homeScreen.dart';
-import 'voicePayScreen.dart';
+import 'voicePayDialog.dart';
 import 'settingsScreen.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -50,10 +50,12 @@ class _MyHomePageState extends State<MyHomePage> {
           size: 25,
         ),
         onPressed: () {
-          Navigator.of(context)
-              .push(new MaterialPageRoute(builder: (BuildContext context) {
-            return VoiceScreen();
-          }));
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return VoicePay();
+            },
+          );
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
