@@ -12,6 +12,7 @@ class _QRFullScreenState extends State<QRFullScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton.extended(
         foregroundColor: Colors.blue,
         backgroundColor: Colors.white,
@@ -25,7 +26,7 @@ class _QRFullScreenState extends State<QRFullScreen> {
           ScreenshotShare.takeScreenshotAndShare();
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SizedBox.expand(
         child: Container(
           child: Stack(
@@ -33,12 +34,44 @@ class _QRFullScreenState extends State<QRFullScreen> {
               Align(
                 alignment: Alignment.center,
                 child: Hero(
-                  tag:
-                      'upi://pay?pa=$mobileNumber@upi&pn=$firstName $lastName&cu=INR&mode=02&purpose=00&orgid=189999&sign=MEQCHxuGu2MuYK7KM+73lS5q+4iUq8qxigXBJHCv+NeMyVsCIQClwuqF8p0T0kcHZqQKafyea+AF6rzuk45UFhW8+KCfAg==',
-                  child: QrImage(
-                    padding: EdgeInsets.all(50.0),
-                    data:
-                        'upi://pay?pa=$mobileNumber@upi&pn=$firstName $lastName&cu=INR&mode=02&purpose=00&orgid=189999&sign=MEQCHxuGu2MuYK7KM+73lS5q+4iUq8qxigXBJHCv+NeMyVsCIQClwuqF8p0T0kcHZqQKafyea+AF6rzuk45UFhW8+KCfAg==',
+                  tag: 'qrFullScreen',
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Text(
+                        '$firstName $lastName',
+                        style: TextStyle(
+                          fontSize: 36.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      Text(
+                        '$upiID',
+                        style: TextStyle(
+                            fontSize: 20.0, fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(height: 10.0),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 15.0),
+                        width: MediaQuery.of(context).size.width * 0.75,
+                        child: QrImage(
+                          data:
+                              'upi://pay?pa=$upiID&pn=$firstName $lastName&cu=INR&mode=02&purpose=00&orgid=189999&sign=MEQCHxuGu2MuYK7KM+73lS5q+4iUq8qxigXBJHCv+NeMyVsCIQClwuqF8p0T0kcHZqQKafyea+AF6rzuk45UFhW8+KCfAg==',
+                          embeddedImage:
+                              AssetImage('assets/images/ic_launcher.png'),
+                          embeddedImageStyle:
+                              QrEmbeddedImageStyle(size: Size(30.4, 30.4)),
+                        ),
+                      ),
+//                      SizedBox(height: 20.0),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.75,
+                        child: Image.asset('assets/images/logo_long.png'),
+                      ),
+                    ],
                   ),
                 ),
               ),

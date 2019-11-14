@@ -2,6 +2,8 @@ import 'package:BHIM/components/appBar.dart';
 import 'package:BHIM/components/constant.dart';
 import 'package:flutter/material.dart';
 
+import 'paymentMethodScreen.dart';
+
 class PaymentMethodsScreen extends StatefulWidget {
   @override
   _PaymentMethodsScreenState createState() => _PaymentMethodsScreenState();
@@ -34,7 +36,12 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
             ),
             title: Text("State Bank of India 3090"),
             subtitle: Text('Bank Account'),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return PaymentMethodScreen();
+              }));
+            },
           ),
           ListTile(
             leading: Container(
@@ -49,7 +56,12 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
             ),
             title: Text("Airtel Payments Bank 8994"),
             subtitle: Text('Bank Account'),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return PaymentMethodScreen();
+              }));
+            },
           ),
           ListTile(
             leading: Container(
@@ -65,7 +77,12 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
             title: Text("Paytm Payments Bank XX94"),
             subtitle: Text('Bank Account'),
             trailing: Text('PRIMARY'),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return PaymentMethodScreen();
+              }));
+            },
           ),
           ListTile(
             leading: Container(

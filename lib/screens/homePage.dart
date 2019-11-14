@@ -1,4 +1,4 @@
-import 'package:BHIM/screens/accountsScreen.dart';
+import 'package:BHIM/screens/rewardzScreen.dart';
 import 'package:flutter/material.dart';
 import 'TransactionHistoryScreen.dart';
 import 'homeScreen.dart';
@@ -31,7 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Center(
             child: Container(
-              child: AccountsScreen(),
+              child: RewardzScreen(),
             ),
           ),
           Center(
@@ -84,6 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 6.0,
                   decoration: BoxDecoration(
 //                    color: _myPage.page == 0 ? Colors.blue : Colors.transparent,
+                  color: Colors.blue,
                     borderRadius: new BorderRadius.only(
                       topLeft: Radius.circular(16),
                       topRight: Radius.circular(16),
@@ -127,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 IconButton(
-                  icon: Icon(Icons.attach_money),
+                  icon: Icon(Icons.card_giftcard),
                   onPressed: () {
                     setState(() {
                       _myPage.jumpToPage(2);
