@@ -34,7 +34,7 @@ class TransactionDetailScreen extends StatelessWidget {
           ScreenshotShare.takeScreenshotAndShare();
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: ListView(
         children: <Widget>[
           Row(

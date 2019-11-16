@@ -1,6 +1,7 @@
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:flutter/services.dart';
 import 'qrScanScreen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,6 +10,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String barcode = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,6 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Container(
+                      padding: EdgeInsets.all(15.0),
                       height: 75.0,
                       width: 75.0,
                       decoration: BoxDecoration(
@@ -95,15 +99,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           bottomRight: Radius.circular(25),
                         ),
                       ),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.arrow_upward,
-                          size: 30.0,
-                        ),
-                        onPressed: () {},
-                      ),
+                      child: Image.asset('assets/images/send.png'),
                     ),
                     Container(
+                      padding: EdgeInsets.all(15.0),
                       height: 75.0,
                       width: 75.0,
                       decoration: BoxDecoration(
@@ -115,15 +114,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           bottomRight: Radius.circular(25),
                         ),
                       ),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.arrow_downward,
-                          size: 30.0,
-                        ),
-                        onPressed: () {},
-                      ),
+                      child: Image.asset('assets/images/receive.png'),
                     ),
                     Container(
+                      padding: EdgeInsets.all(20.0),
                       height: 75.0,
                       width: 75.0,
                       decoration: BoxDecoration(
@@ -135,18 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           bottomRight: Radius.circular(25),
                         ),
                       ),
-                      child: IconButton(
-                        icon: Icon(
-                          FontAwesomeIcons.qrcode,
-                          size: 30.0,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).push(new MaterialPageRoute(
-                              builder: (BuildContext context) {
-                            return QRScanScreen();
-                          }));
-                        },
-                      ),
+                      child: Image.asset('assets/images/qr-code.png'),
                     ),
                   ],
                 ),
@@ -157,5 +140,26 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  Future scan() async {
+    try {
+      String barcode = await BarcodeScanner.scan();
+      setState(() => this.barcode = barcode);
+    } on PlatformException catch (e) {
+      if (e.code == BarcodeScanner.CameraAccessDenied) {
+        setState(() {
+          this.barcode = 'The user did not grant the camera permission!';
+        });
+      } else {
+        setState(() => this.barcode = 'Unknown error: $e');
+      }
+    } on FormatException {
+      setState(() => this.barcode =
+          'null (User returned using the "back"-button before scanning anything. Result)');
+    } catch (e) {
+      setState(() => this.barcode = 'Unknown error: $e');
+    }
+    print(barcode);
   }
 }

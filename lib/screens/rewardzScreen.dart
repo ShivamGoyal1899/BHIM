@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'scratchCardDialog.dart';
+
 class RewardzScreen extends StatefulWidget {
   @override
   _RewardzScreenState createState() => _RewardzScreenState();
@@ -51,153 +53,34 @@ class _RewardzScreenState extends State<RewardzScreen> {
             alignment: Alignment.center,
             padding: const EdgeInsets.all(8.0),
             child: Wrap(
-              alignment: WrapAlignment.center,
+              alignment: WrapAlignment.start,
               spacing: 20.0,
               runSpacing: 20.0,
               children: <Widget>[
                 ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
                   title: "You won",
                   subtitle: '₹ 51',
+                  onPressed: ScratchCard(),
                 ),
                 ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
                   title: "You won",
                   subtitle: '₹ 51',
+                  onPressed: ScratchCard(),
                 ),
                 ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
                   title: "You won",
                   subtitle: '₹ 51',
+                  onPressed: ScratchCard(),
                 ),
                 ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
                   title: "You won",
                   subtitle: '₹ 51',
+                  onPressed: ScratchCard(),
                 ),
                 ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
                   title: "You won",
                   subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
-                ),
-                ActionCard(
-                  icon: FontAwesomeIcons.trophy,
-                  color: Colors.blue,
-                  title: "You won",
-                  subtitle: '₹ 51',
+                  onPressed: ScratchCard(),
                 ),
               ],
             ),
@@ -210,26 +93,25 @@ class _RewardzScreenState extends State<RewardzScreen> {
 }
 
 class ActionCard extends StatelessWidget {
-  final Function onPressed;
-  final IconData icon;
+  final Widget onPressed;
   final String title;
   final String subtitle;
-  final Color color;
 
-  const ActionCard(
-      {Key key,
-      this.onPressed,
-      this.icon,
-      this.title,
-      this.subtitle,
-      this.color})
+  const ActionCard({Key key, this.onPressed, this.title, this.subtitle})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
-      onTap: onPressed,
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return onPressed;
+          },
+        );
+      },
       child: Ink(
         height: MediaQuery.of(context).size.width * 0.425,
         width: MediaQuery.of(context).size.width * 0.425,
@@ -247,11 +129,6 @@ class ActionCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-//            Icon(
-//              icon,
-//              color: color,
-//              size: 50.0,
-//            ),
             Container(
               width: 100.0,
               height: 100.0,

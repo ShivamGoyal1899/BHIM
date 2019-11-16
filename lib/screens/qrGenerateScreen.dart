@@ -17,8 +17,8 @@ class QRGenerateScreen extends StatefulWidget {
 
 class QRGenerateScreenState extends State<QRGenerateScreen> {
   static const double _topSectionTopPadding = 50.0;
-  static const double _topSectionBottomPadding = 20.0;
-  static const double _topSectionHeight = 50.0;
+  static const double _topSectionBottomPadding = 0.0;
+  static const double _topSectionHeight = 20.0;
 
   GlobalKey globalKey = new GlobalKey();
   String _dataString = "Hello from this QR";
@@ -28,6 +28,7 @@ class QRGenerateScreenState extends State<QRGenerateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: TopBar(
         title: 'QR Code Generator',
         child: kBackBtn,
@@ -47,7 +48,7 @@ class QRGenerateScreenState extends State<QRGenerateScreen> {
         ),
         onPressed: _captureAndSharePng,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -76,6 +77,8 @@ class QRGenerateScreenState extends State<QRGenerateScreen> {
     return Container(
       color: const Color(0xFFFFFFFF),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(

@@ -22,37 +22,39 @@ class _ScanState extends State<QRScanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: TopBar(
-          title: 'QR Code Scanner',
-          child: kBackBtn,
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+      backgroundColor: Colors.white,
+      appBar: TopBar(
+        title: 'QR Code Scanner',
+        child: kBackBtn,
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: RaisedButton(
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  splashColor: Colors.blueGrey,
+                  onPressed: scan,
+                  child: const Text('Pay Now')),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Text(
+                barcode,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: RaisedButton(
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    splashColor: Colors.blueGrey,
-                    onPressed: scan,
-                    child: const Text('Pay Now')),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Text(
-                  barcode,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
-          ),
-        ));
+      ),
+    );
   }
 
   Future scan() async {

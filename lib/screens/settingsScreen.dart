@@ -54,6 +54,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: QrImage(
                 data:
                     'upi://pay?pa=$mobileNumber@upi&pn=$firstName $lastName&cu=INR&mode=02&purpose=00&orgid=189999&sign=MEQCHxuGu2MuYK7KM+73lS5q+4iUq8qxigXBJHCv+NeMyVsCIQClwuqF8p0T0kcHZqQKafyea+AF6rzuk45UFhW8+KCfAg==',
+                embeddedImage: AssetImage('assets/images/ic_launcher.png'),
+                embeddedImageStyle:
+                    QrEmbeddedImageStyle(size: Size(14, 14)),
               ),
             ),
           ),
