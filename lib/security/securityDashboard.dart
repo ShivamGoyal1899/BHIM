@@ -1,26 +1,25 @@
+import '../components/appBar.dart';
+import '../components/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pointycastle/api.dart' as crypto;
-import 'dependency.dart';
+import 'dependencyProvider.dart';
 
 TextStyle get whiteTextStyle => TextStyle(color: Colors.white);
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
+class SecurityDashBoard extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _SecurityDashBoardState createState() => _SecurityDashBoardState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _SecurityDashBoardState extends State<SecurityDashBoard> {
   /// The Future that will show the Pem String
   Future<String> futureText;
 
   /// Future to hold the reference to the KeyPair generated with PointyCastle
   /// in order to extract the [crypto.PrivateKey] and [crypto.PublicKey]
   Future<crypto.AsymmetricKeyPair<crypto.PublicKey, crypto.PrivateKey>>
-  futureKeyPair;
+      futureKeyPair;
 
   /// The current [crypto.AsymmetricKeyPair]
   crypto.AsymmetricKeyPair keyPair;
@@ -28,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
   /// With the helper [RsaKeyHelper] this method generates a
   /// new [crypto.AsymmetricKeyPair<crypto.PublicKey, crypto.PrivateKey>
   Future<crypto.AsymmetricKeyPair<crypto.PublicKey, crypto.PrivateKey>>
-  getKeyPair() {
+      getKeyPair() {
     var keyHelper = DependencyProvider.of(context).getRsaKeyHelper();
     return keyHelper.computeRSAKeyPair(keyHelper.getSecureRandom());
   }
@@ -44,8 +43,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: key,
-      appBar: AppBar(
-        title: Text(widget.title),
+      appBar: TopBar(
+        title: 'RSA Dashboard',
+        child: kBackBtn,
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
       ),
       body: Center(
         child: Padding(
@@ -71,8 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(
                 flex: 1,
                 child: FutureBuilder<
-                    crypto.AsymmetricKeyPair<crypto.PublicKey,
-                        crypto.PrivateKey>>(
+                        crypto.AsymmetricKeyPair<crypto.PublicKey,
+                            crypto.PrivateKey>>(
                     future: futureKeyPair,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -96,14 +99,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                       DependencyProvider.of(context)
                                           .getRsaKeyHelper()
                                           .encodePrivateKeyToPemPKCS1(
-                                          keyPair.privateKey));
+                                              keyPair.privateKey));
                                 });
                               },
                             ),
                             MaterialButton(
                               color: Colors.green,
                               child:
-                              Text("Get Public Key", style: whiteTextStyle),
+                                  Text("Get Public Key", style: whiteTextStyle),
                               onPressed: () {
                                 setState(() {
                                   // With the stored keypair, encode the public key to
@@ -112,37 +115,32 @@ class _MyHomePageState extends State<MyHomePage> {
                                       DependencyProvider.of(context)
                                           .getRsaKeyHelper()
                                           .encodePublicKeyToPemPKCS1(
-                                          keyPair.publicKey));
+                                              keyPair.publicKey));
                                 });
                               },
                             ),
                             TextField(
-                              decoration: InputDecoration(
-                                  hintText: "Text to Sign"
-                              ),
+                              decoration:
+                                  InputDecoration(hintText: "Text to Sign"),
                               controller: _controller,
                             ),
                             MaterialButton(
                               color: Colors.black87,
-                              child:
-                              Text("Sign Text", style: whiteTextStyle),
+                              child: Text("Sign Text", style: whiteTextStyle),
                               onPressed: () {
                                 setState(() {
                                   futureText = Future.value(
                                       DependencyProvider.of(context)
                                           .getRsaKeyHelper()
-                                          .sign(
-                                          _controller.text,
-                                          keyPair.privateKey));
+                                          .sign(_controller.text,
+                                              keyPair.privateKey));
                                 });
                               },
                             ),
-
                           ],
                         );
                       } else {
-                        return Container(
-                        );
+                        return Container();
                       }
                     }),
               ),

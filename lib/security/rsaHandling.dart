@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
@@ -73,7 +72,7 @@ class RsaKeyHelper {
     }
 
     RSAPublicKey rsaPublicKey =
-    RSAPublicKey(modulus.valueAsBigInteger, exponent.valueAsBigInteger);
+        RSAPublicKey(modulus.valueAsBigInteger, exponent.valueAsBigInteger);
 
     return rsaPublicKey;
   }
@@ -85,9 +84,9 @@ class RsaKeyHelper {
   String sign(String plainText, RSAPrivateKey privateKey) {
     var signer = RSASigner(SHA256Digest(), "0609608648016503040201");
     signer.init(true, PrivateKeyParameter<RSAPrivateKey>(privateKey));
-    return  base64Encode(signer.generateSignature(createUint8ListFromString(plainText)).bytes);
+    return base64Encode(
+        signer.generateSignature(createUint8ListFromString(plainText)).bytes);
   }
-
 
   /// Creates a [Uint8List] from a string to be signed
   Uint8List createUint8ListFromString(String s) {
@@ -185,7 +184,6 @@ class RsaKeyHelper {
   ///
   /// Given [RSAPrivateKey] returns a base64 encoded [String] with standard PEM headers and footers
   String encodePrivateKeyToPemPKCS1(RSAPrivateKey privateKey) {
-
     var topLevel = new ASN1Sequence();
 
     var version = ASN1Integer(BigInt.from(0));
@@ -241,11 +239,7 @@ AsymmetricKeyPair<PublicKey, PrivateKey> getRsaKeyPair(
   var keyGenerator = new RSAKeyGenerator();
   keyGenerator.init(params);
 
-  print("Fuck");
   print(keyGenerator.generateKeyPair());
 
   return keyGenerator.generateKeyPair();
 }
-
-
-

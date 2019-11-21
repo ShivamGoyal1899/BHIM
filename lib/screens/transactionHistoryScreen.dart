@@ -1,5 +1,5 @@
-import 'package:BHIM/components/appBar.dart';
-import 'package:BHIM/models/transactionModel.dart';
+import '../components/appBar.dart';
+import '../models/transactionModel.dart';
 import 'package:flutter/material.dart';
 
 import 'transactionDetailScreen.dart';

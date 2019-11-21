@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'rsa.dart';
+import 'rsaHandling.dart';
 
 class DependencyProvider extends InheritedWidget {
-
   static DependencyProvider of(BuildContext context) {
     return (context.inheritFromWidgetOfExactType(DependencyProvider)
-    as DependencyProvider);
+        as DependencyProvider);
   }
 
   DependencyProvider({
@@ -17,7 +16,6 @@ class DependencyProvider extends InheritedWidget {
   bool updateShouldNotify(InheritedWidget oldWidget) => false;
 
   RsaKeyHelper getRsaKeyHelper() {
-
     return RsaKeyHelper();
   }
 }

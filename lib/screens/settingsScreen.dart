@@ -1,7 +1,8 @@
-import 'package:BHIM/components/appBar.dart';
-import 'package:BHIM/screens/deviceInfoScreen.dart';
-import 'package:BHIM/screens/languageScreen.dart';
-import 'package:BHIM/screens/ussdServiceScreen.dart';
+import '../components/appBar.dart';
+import 'deviceInfoScreen.dart';
+import 'languageScreen.dart';
+import 'ussdServiceScreen.dart';
+import '../security/securityDashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -55,8 +56,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 data:
                     'upi://pay?pa=$mobileNumber@upi&pn=$firstName $lastName&cu=INR&mode=02&purpose=00&orgid=189999&sign=MEQCHxuGu2MuYK7KM+73lS5q+4iUq8qxigXBJHCv+NeMyVsCIQClwuqF8p0T0kcHZqQKafyea+AF6rzuk45UFhW8+KCfAg==',
                 embeddedImage: AssetImage('assets/images/ic_launcher.png'),
-                embeddedImageStyle:
-                    QrEmbeddedImageStyle(size: Size(14, 14)),
+                embeddedImageStyle: QrEmbeddedImageStyle(size: Size(14, 14)),
               ),
             ),
           ),
@@ -89,7 +89,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           ListTile(
             leading: IconButton(icon: Icon(Icons.phone)),
-            title: Text("Mobile mumber"),
+            title: Text("Mobile number"),
             subtitle: Text('+91 90122 18994'),
           ),
           ListTile(
@@ -312,6 +312,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {
                 return QRGenerateScreen();
+              }));
+            },
+          ),
+          ListTile(
+            leading: IconButton(icon: Icon(FontAwesomeIcons.userSecret)),
+            title: Text("RSA Dashboard"),
+            subtitle: Text('Generate RSA Keys'),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.black,
+                size: 16.0,
+              ),
+              onPressed: null,
+            ),
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return SecurityDashBoard();
               }));
             },
           ),

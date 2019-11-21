@@ -1,7 +1,7 @@
-import 'package:BHIM/components/appBar.dart';
-import 'package:BHIM/components/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:android_device_info/android_device_info.dart';
+import '../components/appBar.dart';
+import '../components/constant.dart';
 import '../components/row_item.dart';
 
 class DeviceInfoScreen extends StatefulWidget {

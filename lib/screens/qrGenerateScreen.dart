@@ -1,5 +1,5 @@
-import 'package:BHIM/components/appBar.dart';
-import 'package:BHIM/components/constant.dart';
+import '../components/appBar.dart';
+import '../components/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/services.dart';

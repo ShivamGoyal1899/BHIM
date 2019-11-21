@@ -1,10 +1,9 @@
-import 'dart:async';
-
-import 'package:BHIM/components/appBar.dart';
-import 'package:BHIM/components/constant.dart';
-import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:barcode_scan/barcode_scan.dart';
+import 'dart:async';
+import '../components/appBar.dart';
+import '../components/constant.dart';
 
 class QRScanScreen extends StatefulWidget {
   @override

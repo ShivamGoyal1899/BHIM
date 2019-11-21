@@ -1,8 +1,6 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart';
-import 'qrScanScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -116,20 +114,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Image.asset('assets/images/receive.png'),
                     ),
-                    Container(
-                      padding: EdgeInsets.all(20.0),
-                      height: 75.0,
-                      width: 75.0,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25),
-                          topRight: Radius.circular(25),
-                          bottomLeft: Radius.circular(25),
-                          bottomRight: Radius.circular(25),
+                    GestureDetector(
+                      child: Container(
+                        padding: EdgeInsets.all(20.0),
+                        height: 75.0,
+                        width: 75.0,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25),
+                            bottomLeft: Radius.circular(25),
+                            bottomRight: Radius.circular(25),
+                          ),
                         ),
+                        child: Image.asset('assets/images/qr-code.png'),
                       ),
-                      child: Image.asset('assets/images/qr-code.png'),
+                      onTap: () => scan(),
                     ),
                   ],
                 ),

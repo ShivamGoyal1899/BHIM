@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_lock_screen/flutter_lock_screen.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:pointycastle/api.dart' as crypto;
+import '../security/dependencyProvider.dart';
 import 'homePage.dart';
-import 'package:flutter/services.dart';
 
 class AppLockScreen extends StatefulWidget {
   AppLockScreen({Key key, this.title}) : super(key: key);
@@ -36,6 +38,29 @@ class _AppLockScreenState extends State<AppLockScreen> {
     }
   }
 
+  /// The Future that will show the Pem String
+  Future<String> futureText;
+
+  /// Future to hold the reference to the KeyPair generated with PointyCastle
+  /// in order to extract the [crypto.PrivateKey] and [crypto.PublicKey]
+  Future<crypto.AsymmetricKeyPair<crypto.PublicKey, crypto.PrivateKey>>
+      futureKeyPair;
+
+  /// The current [crypto.AsymmetricKeyPair]
+  crypto.AsymmetricKeyPair keyPair;
+
+  /// With the helper [RsaKeyHelper] this method generates a
+  /// new [crypto.AsymmetricKeyPair<crypto.PublicKey, crypto.PrivateKey>
+  Future<crypto.AsymmetricKeyPair<crypto.PublicKey, crypto.PrivateKey>>
+      getKeyPair() {
+    var keyHelper = DependencyProvider.of(context).getRsaKeyHelper();
+    return keyHelper.computeRSAKeyPair(keyHelper.getSecureRandom());
+  }
+
+  /// GlobalKey to be used when showing the [Snackbar] for the successful
+  /// copy of the Key
+  final key = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     var myPass = [1, 2, 3, 4];
@@ -62,6 +87,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
           return true;
         },
         onSuccess: () {
+//          getKeyPair();
           Navigator.of(context).pushReplacement(
               new MaterialPageRoute(builder: (BuildContext context) {
             return MyHomePage();

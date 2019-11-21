@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 import '../models/languageModel.dart';
-
-const languages = const [
-  const Language('Hindi', 'hi_HI'),
-  const Language('English IN', 'en_IN'),
-  const Language('English US', 'en_US'),
-  const Language('Pусский', 'ru_RU'),
-  const Language('Italiano', 'it_IT'),
-  const Language('Español', 'es_ES'),
-];
-
-class Language {
-  final String name;
-  final String code;
-
-  const Language(this.name, this.code);
-}
+import 'languageScreen.dart';
+import 'paymentMethodScreen.dart';
+import 'paymentMethodsScreen.dart';
+import 'qrScanScreen.dart';
+import 'requestScreen.dart';
+import 'rewardzScreen.dart';
+import 'sendScreen.dart';
+import 'settingsScreen.dart';
+import 'transactionHistoryScreen.dart';
+import 'ussdServiceScreen.dart';
+import 'qrFullScreen.dart';
 
 class VoicePay extends StatefulWidget {
   @override
@@ -24,14 +19,13 @@ class VoicePay extends StatefulWidget {
 }
 
 class _VoicePayState extends State<VoicePay> {
+  String transcription = 'Tap on mic to VoicePay';
   SpeechRecognition _speech;
 
   bool _speechRecognitionAvailable = false;
   bool _isListening = false;
 
-  String transcription = 'Tap on mic to VoicePay';
-
-  Language selectedLang = languages.first;
+  LanguageModel selectedLang = languageData[0];
 
   @override
   initState() {
@@ -107,65 +101,65 @@ class _VoicePayState extends State<VoicePay> {
                     ? () => start()
                     : null,
               ),
-              PopupMenuButton<Language>(
-                icon: Icon(Icons.translate),
-                onSelected: _selectLangHandler,
-                itemBuilder: (BuildContext context) => _buildLanguagesWidgets,
-              ),
-//              IconButton(
+//              PopupMenuButton<Language>(
 //                icon: Icon(Icons.translate),
-//                onPressed: () {
-//                  showModalBottomSheet<void>(
-//                    context: context,
-//                    shape: RoundedRectangleBorder(
-//                      borderRadius: BorderRadius.only(
-//                        topLeft: Radius.circular(25),
-//                        topRight: Radius.circular(25),
-//                      ),
-//                    ),
-//                    builder: (BuildContext context) {
-//                      return Container(
-//                        height: 350.0,
-//                        child: ListView.builder(
-//                          itemCount: languageData.length + 1,
-//                          itemBuilder: (context, index) => index == 0
-//                              ? Column(
-//                                  children: <Widget>[
-//                                    ListTile(
-//                                      title: Text(
-//                                        'Choose Language',
-//                                        style: TextStyle(
-//                                          fontWeight: FontWeight.w700,
-//                                        ),
-//                                        textAlign: TextAlign.center,
-//                                      ),
-//                                    ),
-//                                    Divider(
-//                                      height: 0.0,
-//                                      color: Colors.black,
-//                                    ),
-//                                  ],
-//                                )
-//                              : ListTile(
-//                                  title: Text(
-//                                      languageData[index - 1].languageName),
-//                                  trailing:
-//                                      languageData[index - 1].languageCode ==
-//                                              'en_IN'
-//                                          ? IconButton(
-//                                              icon: Icon(
-//                                                Icons.check,
-//                                                color: Colors.black,
-//                                              ),
-//                                              onPressed: null,
-//                                            )
-//                                          : null),
-//                        ),
-//                      );
-//                    },
-//                  );
-//                },
+//                onSelected: _selectLangHandler,
+//                itemBuilder: (BuildContext context) => _buildLanguagesWidgets,
 //              ),
+              IconButton(
+                icon: Icon(Icons.translate),
+                onPressed: () {
+                  showModalBottomSheet<void>(
+                    context: context,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25),
+                      ),
+                    ),
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: 350.0,
+                        child: ListView.builder(
+                          itemCount: languageData.length + 1,
+                          itemBuilder: (context, index) => index == 0
+                              ? Column(
+                                  children: <Widget>[
+                                    ListTile(
+                                      title: Text(
+                                        'Choose Language',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    Divider(
+                                      height: 0.0,
+                                      color: Colors.black,
+                                    ),
+                                  ],
+                                )
+                              : ListTile(
+                                  title: Text(
+                                      languageData[index - 1].languageName),
+                                  trailing:
+                                      languageData[index - 1].languageCode ==
+                                              'en_IN'
+                                          ? IconButton(
+                                              icon: Icon(
+                                                Icons.check,
+                                                color: Colors.black,
+                                              ),
+                                              onPressed: null,
+                                            )
+                                          : null),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ],
           ),
         ],
@@ -173,31 +167,8 @@ class _VoicePayState extends State<VoicePay> {
     );
   }
 
-  List<CheckedPopupMenuItem<Language>> get _buildLanguagesWidgets => languages
-      .map((l) => new CheckedPopupMenuItem<Language>(
-            value: l,
-            checked: selectedLang == l,
-            child: new Text(l.name),
-          ))
-      .toList();
-
-  void _selectLangHandler(Language lang) {
-    setState(() => selectedLang = lang);
-  }
-
-  Widget _buildButton({String label, VoidCallback onPressed}) => new Padding(
-      padding: new EdgeInsets.all(12.0),
-      child: new RaisedButton(
-        color: Colors.cyan.shade600,
-        onPressed: onPressed,
-        child: new Text(
-          label,
-          style: const TextStyle(color: Colors.white),
-        ),
-      ));
-
   void start() => _speech
-      .listen(locale: selectedLang.code)
+      .listen(locale: selectedLang.languageCode)
       .then((result) => print('_MyAppState.start => result $result'));
 
   void cancel() =>
@@ -212,15 +183,85 @@ class _VoicePayState extends State<VoicePay> {
 
   void onCurrentLocale(String locale) {
     print('_MyAppState.onCurrentLocale... $locale');
-    setState(
-        () => selectedLang = languages.firstWhere((l) => l.code == locale));
   }
 
   void onRecognitionStarted() => setState(() => _isListening = true);
 
-  void onRecognitionResult(String text) => setState(() => transcription = text);
+  void onRecognitionResult(String text) {
+    setState(() => transcription = text);
+  }
 
-  void onRecognitionComplete() => setState(() => _isListening = false);
+  void onRecognitionComplete() {
+    setState(() {
+      return _isListening = false;
+    });
+    if (transcription.contains('balance')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return PaymentMethodScreen();
+      }));
+    } else if (transcription.contains('history')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return TransactionHistoryScreen();
+      }));
+    } else if (transcription.contains('rewards')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return RewardzScreen();
+      }));
+    } else if (transcription.contains('scan')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return QRScanScreen();
+      }));
+    } else if (transcription.contains('send')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return SendScreen();
+      }));
+    } else if (transcription.contains('receive')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return QRFullScreen();
+      }));
+    } else if (transcription.contains('request')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return RequestScreen();
+      }));
+    } else if (transcription.contains('accounts')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return PaymentMethodsScreen();
+      }));
+    } else if (transcription.contains('language')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return LanguageScreen();
+      }));
+    } else if (transcription.contains('USSD')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return USSDServiceScreen();
+      }));
+    } else if (transcription.contains('logout')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return TransactionHistoryScreen();
+      }));
+    } else if (transcription.contains('feedback')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return TransactionHistoryScreen();
+      }));
+    } else if (transcription.contains('settings')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return SettingsScreen();
+      }));
+    }
+  }
 
   void errorHandler() => activateSpeechRecognizer();
 }

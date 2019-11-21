@@ -1,6 +1,6 @@
-import 'package:BHIM/components/appBar.dart';
-import 'package:BHIM/components/constant.dart';
-import 'package:BHIM/models/transactionModel.dart';
+import '../components/appBar.dart';
+import '../components/constant.dart';
+import '../models/transactionModel.dart';
 import 'package:flutter/material.dart';
 import 'package:screenshot_and_share/screenshot_share.dart';
 import 'transactionHistoryScreen.dart';

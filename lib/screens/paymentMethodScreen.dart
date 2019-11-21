@@ -1,6 +1,6 @@
-import 'package:BHIM/components/appBar.dart';
-import 'package:BHIM/components/constant.dart';
-import 'package:BHIM/screens/qrFullScreen.dart';
+import '../components/appBar.dart';
+import '../components/constant.dart';
+import 'qrFullScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

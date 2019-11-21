@@ -1,12 +1,9 @@
-import 'package:BHIM/screens/rewardzScreen.dart';
 import 'package:flutter/material.dart';
-import 'TransactionHistoryScreen.dart';
+import 'transactionHistoryScreen.dart';
+import 'rewardzScreen.dart';
 import 'homeScreen.dart';
-import 'voicePayDialog.dart';
 import 'settingsScreen.dart';
-import 'dart:io';
-import 'package:encrypt/encrypt.dart';
-import 'package:pointycastle/asymmetric/api.dart';
+import 'voicePayDialog.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -87,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 6.0,
                   decoration: BoxDecoration(
 //                    color: _myPage.page == 0 ? Colors.blue : Colors.transparent,
-                  color: Colors.blue,
+                    color: Colors.blue,
                     borderRadius: new BorderRadius.only(
                       topLeft: Radius.circular(16),
                       topRight: Radius.circular(16),

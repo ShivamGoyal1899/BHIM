@@ -1,6 +1,6 @@
-import 'package:BHIM/components/appBar.dart';
-import 'package:BHIM/components/constant.dart';
 import 'package:flutter/material.dart';
+import '../components/appBar.dart';
+import '../components/constant.dart';
 
 class NotificationsScreen extends StatefulWidget {
   @override
