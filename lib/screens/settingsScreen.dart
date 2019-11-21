@@ -149,11 +149,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               }));
             },
           ),
-          ListTile(
-            leading: IconButton(icon: Icon(Icons.card_giftcard)),
-            title: Text("Rewardz"),
-            subtitle: Text('Coming Soon'),
-          ),
+
           Divider(
             height: 0.0,
             color: Colors.black,
