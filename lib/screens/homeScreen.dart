@@ -1,3 +1,5 @@
+import 'package:BHIM/screens/requestScreen.dart';
+import 'package:BHIM/screens/sendScreen.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -84,35 +86,50 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.all(15.0),
-                      height: 75.0,
-                      width: 75.0,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25),
-                          topRight: Radius.circular(25),
-                          bottomLeft: Radius.circular(25),
-                          bottomRight: Radius.circular(25),
+                    GestureDetector(
+                        child: Container(
+                          padding: EdgeInsets.all(15.0),
+                          height: 75.0,
+                          width: 75.0,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(25),
+                              topRight: Radius.circular(25),
+                              bottomLeft: Radius.circular(25),
+                              bottomRight: Radius.circular(25),
+                            ),
+                          ),
+                          child: Image.asset('assets/images/send.png'),
                         ),
-                      ),
-                      child: Image.asset('assets/images/send.png'),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(15.0),
-                      height: 75.0,
-                      width: 75.0,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25),
-                          topRight: Radius.circular(25),
-                          bottomLeft: Radius.circular(25),
-                          bottomRight: Radius.circular(25),
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) {
+                            return SendScreen();
+                          }));
+                        }),
+                    GestureDetector(
+                      child: Container(
+                        padding: EdgeInsets.all(15.0),
+                        height: 75.0,
+                        width: 75.0,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25),
+                            bottomLeft: Radius.circular(25),
+                            bottomRight: Radius.circular(25),
+                          ),
                         ),
+                        child: Image.asset('assets/images/receive.png'),
                       ),
-                      child: Image.asset('assets/images/receive.png'),
+                      onTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (BuildContext context) {
+                          return RequestScreen();
+                        }));
+                      },
                     ),
                     GestureDetector(
                       child: Container(
