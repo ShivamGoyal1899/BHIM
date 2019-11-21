@@ -24,6 +24,9 @@ dependencies:
   screenshot_and_share: ^0.0.2
   speech_recognition: ^0.3.0
   scratcher: ^1.2.1
+  encrypt: ^3.3.1
+  pointycastle: ^1.0.0
+  asn1lib: ^0.5.3
 
 dev_dependencies:
   flutter_test:

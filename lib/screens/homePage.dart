@@ -4,6 +4,9 @@ import 'TransactionHistoryScreen.dart';
 import 'homeScreen.dart';
 import 'voicePayDialog.dart';
 import 'settingsScreen.dart';
+import 'dart:io';
+import 'package:encrypt/encrypt.dart';
+import 'package:pointycastle/asymmetric/api.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
