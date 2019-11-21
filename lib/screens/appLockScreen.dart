@@ -5,6 +5,7 @@ import 'package:local_auth/local_auth.dart';
 import 'package:pointycastle/api.dart' as crypto;
 import '../security/dependencyProvider.dart';
 import 'homePage.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class AppLockScreen extends StatefulWidget {
   AppLockScreen({Key key, this.title}) : super(key: key);
@@ -16,6 +17,26 @@ class AppLockScreen extends StatefulWidget {
 }
 
 class _AppLockScreenState extends State<AppLockScreen> {
+  Map<PermissionGroup, PermissionStatus> permissions;
+
+  void getPermission() async {
+    permissions = await PermissionHandler().requestPermissions([
+      PermissionGroup.microphone,
+      PermissionGroup.camera,
+      PermissionGroup.contacts,
+      PermissionGroup.storage,
+      PermissionGroup.phone,
+      PermissionGroup.sms,
+      PermissionGroup.location,
+      PermissionGroup.notification,
+    ]);
+  }
+
+  void initState(){
+    super.initState();
+    getPermission();
+  }
+
   bool isFingerprint = false;
 
   Future<Null> biometrics() async {
