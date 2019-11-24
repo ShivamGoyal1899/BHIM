@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot_and_share/screenshot_share.dart';
-import 'settingsScreen.dart';
+
+import '../global.dart';
 
 class QRFullScreen extends StatefulWidget {
   @override
@@ -41,7 +42,7 @@ class _QRFullScreenState extends State<QRFullScreen> {
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       Text(
-                        '$firstName $lastName',
+                        myName,
                         style: TextStyle(
                           fontSize: 36.0,
                           fontWeight: FontWeight.w600,
@@ -49,7 +50,7 @@ class _QRFullScreenState extends State<QRFullScreen> {
                       ),
                       SizedBox(height: 10.0),
                       Text(
-                        '$upiID',
+                        '$myID',
                         style: TextStyle(
                             fontSize: 20.0, fontWeight: FontWeight.w600),
                       ),
@@ -59,7 +60,7 @@ class _QRFullScreenState extends State<QRFullScreen> {
                         width: MediaQuery.of(context).size.width * 0.75,
                         child: QrImage(
                           data:
-                              'upi://pay?pa=$upiID&pn=$firstName $lastName&cu=INR&mode=02&purpose=00&orgid=189999&sign=MEQCHxuGu2MuYK7KM+73lS5q+4iUq8qxigXBJHCv+NeMyVsCIQClwuqF8p0T0kcHZqQKafyea+AF6rzuk45UFhW8+KCfAg==',
+                              'upi://pay?pa=$myID&pn=$myName&cu=INR&mode=02&purpose=00&orgid=189999&sign=MEQCHxuGu2MuYK7KM+73lS5q+4iUq8qxigXBJHCv+NeMyVsCIQClwuqF8p0T0kcHZqQKafyea+AF6rzuk45UFhW8+KCfAg==',
                           embeddedImage:
                               AssetImage('assets/images/ic_launcher.png'),
                           embeddedImageStyle:

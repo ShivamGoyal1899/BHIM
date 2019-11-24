@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+
 import '../components/appBar.dart';
-import '../components/constant.dart';
 
 class NotificationsScreen extends StatefulWidget {
   @override
@@ -13,7 +13,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     return Scaffold(
       appBar: TopBar(
         title: 'Notifications',
-        child: kBackBtn,
+        child: Icon(
+          Icons.arrow_back_ios,
+        ),
         onPressed: () {
           Navigator.of(context).pop();
         },

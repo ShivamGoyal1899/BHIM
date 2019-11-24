@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'constant.dart';
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -31,12 +30,20 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
                 tag: 'topBarBtn',
                 child: Card(
                   elevation: 0,
-                  shape: kBackButtonShape,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(30),
+                    ),
+                  ),
                   child: MaterialButton(
                     height: 50,
                     minWidth: 50,
                     elevation: 10,
-                    shape: kBackButtonShape,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(30),
+                      ),
+                    ),
                     onPressed: onPressed,
                     child: child,
                   ),

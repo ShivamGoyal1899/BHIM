@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:android_device_info/android_device_info.dart';
+import 'package:flutter/material.dart';
+
 import '../components/appBar.dart';
-import '../components/constant.dart';
-import '../components/row_item.dart';
+import '../components/rowItem.dart';
 
 class DeviceInfoScreen extends StatefulWidget {
   @override
@@ -14,12 +14,11 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
 
   @override
   void initState() {
+    getDeviceInfo();
     super.initState();
-
-    getData();
   }
 
-  getData() async {
+  getDeviceInfo() async {
     var data = {};
 
     final memory = await AndroidDeviceInfo().getNetworkInfo();
@@ -51,7 +50,9 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
       backgroundColor: Colors.white,
       appBar: TopBar(
         title: 'Device Info',
-        child: kBackBtn,
+        child: Icon(
+          Icons.arrow_back_ios,
+        ),
         onPressed: () {
           Navigator.of(context).pop();
         },

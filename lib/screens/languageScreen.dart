@@ -1,6 +1,6 @@
-import '../components/appBar.dart';
-import '../components/constant.dart';
 import 'package:flutter/material.dart';
+
+import '../components/appBar.dart';
 
 class LanguageScreen extends StatefulWidget {
   @override
@@ -13,7 +13,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
     return Scaffold(
       appBar: TopBar(
         title: 'Change Language',
-        child: kBackBtn,
+        child: Icon(
+          Icons.arrow_back_ios,
+        ),
         onPressed: () {
           Navigator.of(context).pop();
         },

@@ -1,9 +1,10 @@
+import 'dart:async';
+
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:barcode_scan/barcode_scan.dart';
-import 'dart:async';
+
 import '../components/appBar.dart';
-import '../components/constant.dart';
 
 class QRScanScreen extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class QRScanScreen extends StatefulWidget {
 }
 
 class _ScanState extends State<QRScanScreen> {
-  String barcode = "";
+  String barcode = '';
 
   @override
   initState() {
@@ -24,7 +25,9 @@ class _ScanState extends State<QRScanScreen> {
       backgroundColor: Colors.white,
       appBar: TopBar(
         title: 'QR Code Scanner',
-        child: kBackBtn,
+        child: Icon(
+          Icons.arrow_back_ios,
+        ),
         onPressed: () {
           Navigator.of(context).pop();
         },

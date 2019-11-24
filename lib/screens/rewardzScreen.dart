@@ -1,6 +1,7 @@
-import '../components/appBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+import '../components/appBar.dart';
 import 'scratchCardDialog.dart';
 
 class RewardzScreen extends StatefulWidget {

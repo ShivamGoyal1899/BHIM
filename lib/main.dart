@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'screens/appLockScreen.dart';
 
-Future main() async {
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(MyApp());
+void main() {
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  runApp(BHIMApp());
 }
 
-class MyApp extends StatelessWidget {
+class BHIMApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

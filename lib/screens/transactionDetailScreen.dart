@@ -1,9 +1,8 @@
-import '../components/appBar.dart';
-import '../components/constant.dart';
-import '../models/transactionModel.dart';
 import 'package:flutter/material.dart';
 import 'package:screenshot_and_share/screenshot_share.dart';
-import 'transactionHistoryScreen.dart';
+
+import '../components/appBar.dart';
+import '../global.dart';
 
 class TransactionDetailScreen extends StatelessWidget {
   final int index;
@@ -15,7 +14,9 @@ class TransactionDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: TopBar(
         title: 'Transaction Details',
-        child: kBackBtn,
+        child: Icon(
+          Icons.arrow_back_ios,
+        ),
         onPressed: () {
           Navigator.of(context).pop();
         },
@@ -46,9 +47,12 @@ class TransactionDetailScreen extends StatelessWidget {
                 alignment: Alignment.center,
                 child: CircleAvatar(
                   radius: 30.0,
-                  backgroundColor: Colors.transparent,
-                  backgroundImage:
-                      AssetImage(transactionData[index].payerAvatarUrl),
+                  backgroundColor: Colors.blue,
+                  child: Text(
+                    listDecryptedTransaction[index].split(',')[3][0],
+                    style:
+                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.w700),
+                  ),
                 ),
               ),
               SizedBox(width: 2.0),
@@ -59,9 +63,12 @@ class TransactionDetailScreen extends StatelessWidget {
                 alignment: Alignment.center,
                 child: CircleAvatar(
                   radius: 30.0,
-                  backgroundColor: Colors.transparent,
-                  backgroundImage:
-                      AssetImage(transactionData[index].payeeAvatarUrl),
+                  backgroundColor: Colors.blue,
+                  child: Text(
+                    listDecryptedTransaction[index].split(',')[0][0],
+                    style:
+                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.w700),
+                  ),
                 ),
               )
             ],
@@ -70,20 +77,20 @@ class TransactionDetailScreen extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Text(
-                  '₹ ' + transactionData[index].amount,
+                  '₹ ' + listDecryptedTransaction[index].split(',')[6],
                   style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.w500),
                 ),
                 SizedBox(height: 2.0),
                 Text(
-                  myID == transactionData[index].payeeID
+                  myID == listDecryptedTransaction[index].split(',')[1]
                       ? 'Received from'
                       : 'Paid to',
                   style: TextStyle(fontSize: 14.0),
                 ),
                 Text(
-                  myID == transactionData[index].payeeID
-                      ? transactionData[index].payerName
-                      : transactionData[index].payeeName,
+                  myID == listDecryptedTransaction[index].split(',')[1]
+                      ? listDecryptedTransaction[index].split(',')[3]
+                      : listDecryptedTransaction[index].split(',')[0],
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w500,
@@ -98,25 +105,32 @@ class TransactionDetailScreen extends StatelessWidget {
             color: Colors.black,
           ),
           ListTile(
-            leading: transactionData[index].transactionStatus == 'success'
+            leading: listDecryptedTransaction[index].split(',')[9] == 'success'
                 ? IconButton(
                     icon: Icon(Icons.check_circle, color: Colors.green))
-                : transactionData[index].transactionStatus == 'failed'
+                : listDecryptedTransaction[index].split(',')[9] == 'failed'
                     ? IconButton(
                         icon: Icon(Icons.remove_circle, color: Colors.red))
                     : IconButton(
                         icon: Icon(Icons.pause_circle_filled,
                             color: Colors.blue)),
-            title: Text(transactionData[index].transactionStatus == 'success'
-                ? myID == transactionData[index].payeeID
-                    ? 'Received' + ' ₹ ' + transactionData[index].amount
-                    : 'Paid' + ' ₹ ' + transactionData[index].amount
-                : transactionData[index].transactionStatus == 'failed'
-                    ? 'Transaction failed'
-                    : 'Transaction pending'),
-            subtitle: Text(transactionData[index].date +
+            title: Text(
+                listDecryptedTransaction[index].split(',')[9] == 'success'
+                    ? myID == listDecryptedTransaction[index].split(',')[1]
+                        ? 'Received' +
+                            ' ₹ ' +
+                            listDecryptedTransaction[index].split(',')[6]
+                        : 'Paid' +
+                            ' ₹ ' +
+                            listDecryptedTransaction[index].split(',')[6]
+                    : listDecryptedTransaction[index].split(',')[9] == 'failed'
+                        ? 'Transaction failed'
+                        : 'Transaction pending'),
+            subtitle: Text(listDecryptedTransaction[index]
+                    .split(',')[8]
+                    .split(' ')[0] +
                 ' • ' +
-                transactionData[index].time),
+                listDecryptedTransaction[index].split(',')[8].split(' ')[1]),
           ),
           Divider(
             height: 0.0,
@@ -124,15 +138,16 @@ class TransactionDetailScreen extends StatelessWidget {
           ),
           ListTile(
             title: Text('UPI Transaction ID'),
-            subtitle: Text(transactionData[index].transactionID),
+            subtitle: Text(listDecryptedTransaction[index].split(',')[7]),
           ),
           ListTile(
-            title: Text('To: ' + transactionData[index].payeeName),
-            subtitle: Text(transactionData[index].payeeID),
+            title: Text('To: ' + listDecryptedTransaction[index].split(',')[0]),
+            subtitle: Text(listDecryptedTransaction[index].split(',')[1]),
           ),
           ListTile(
-            title: Text('From: ' + transactionData[index].payerName),
-            subtitle: Text(transactionData[index].payerID),
+            title:
+                Text('From: ' + listDecryptedTransaction[index].split(',')[3]),
+            subtitle: Text(listDecryptedTransaction[index].split(',')[4]),
           ),
           Divider(
             height: 0.0,

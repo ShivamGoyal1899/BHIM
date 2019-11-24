@@ -1,8 +1,8 @@
-import '../components/appBar.dart';
-import '../components/constant.dart';
-import 'qrFullScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../components/appBar.dart';
+import 'qrFullScreen.dart';
 
 class PaymentMethodScreen extends StatefulWidget {
   @override
@@ -15,7 +15,9 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
     return Scaffold(
       appBar: TopBar(
         title: 'Payment Method',
-        child: kBackBtn,
+        child: Icon(
+          Icons.arrow_back_ios,
+        ),
         onPressed: () {
           Navigator.of(context).pop();
         },

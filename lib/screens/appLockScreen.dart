@@ -1,10 +1,8 @@
+import 'package:BHIM/screens/DrawerScreens/navigationHomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_lock_screen/flutter_lock_screen.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:pointycastle/api.dart' as crypto;
-import '../security/dependencyProvider.dart';
-import 'homePage.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class AppLockScreen extends StatefulWidget {
@@ -32,7 +30,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
     ]);
   }
 
-  void initState(){
+  void initState() {
     super.initState();
     getPermission();
   }
@@ -59,34 +57,11 @@ class _AppLockScreenState extends State<AppLockScreen> {
     }
   }
 
-  /// The Future that will show the Pem String
-  Future<String> futureText;
-
-  /// Future to hold the reference to the KeyPair generated with PointyCastle
-  /// in order to extract the [crypto.PrivateKey] and [crypto.PublicKey]
-  Future<crypto.AsymmetricKeyPair<crypto.PublicKey, crypto.PrivateKey>>
-      futureKeyPair;
-
-  /// The current [crypto.AsymmetricKeyPair]
-  crypto.AsymmetricKeyPair keyPair;
-
-  /// With the helper [RsaKeyHelper] this method generates a
-  /// new [crypto.AsymmetricKeyPair<crypto.PublicKey, crypto.PrivateKey>
-  Future<crypto.AsymmetricKeyPair<crypto.PublicKey, crypto.PrivateKey>>
-      getKeyPair() {
-    var keyHelper = DependencyProvider.of(context).getRsaKeyHelper();
-    return keyHelper.computeRSAKeyPair(keyHelper.getSecureRandom());
-  }
-
-  /// GlobalKey to be used when showing the [Snackbar] for the successful
-  /// copy of the Key
-  final key = new GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     var myPass = [1, 2, 3, 4];
     return LockScreen(
-        title: "BHIM UPI",
+        title: "Default PassCode is 1234",
         passLength: myPass.length,
         bgImage: "assets/images/logo.png",
         fingerPrintImage: "assets/images/ic_touch.png",
@@ -104,14 +79,12 @@ class _AppLockScreenState extends State<AppLockScreen> {
               return false;
             }
           }
-
           return true;
         },
         onSuccess: () {
-//          getKeyPair();
           Navigator.of(context).pushReplacement(
               new MaterialPageRoute(builder: (BuildContext context) {
-            return MyHomePage();
+            return NavigationHomeScreen();
           }));
         });
   }

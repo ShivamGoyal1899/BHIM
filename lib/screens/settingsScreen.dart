@@ -1,23 +1,19 @@
-import '../components/appBar.dart';
-import 'deviceInfoScreen.dart';
-import 'languageScreen.dart';
-import 'ussdServiceScreen.dart';
-import '../security/securityDashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../components/appBar.dart';
+import '../global.dart';
+import '../security/securityDashboard.dart';
+import 'deviceInfoScreen.dart';
+import 'languageScreen.dart';
 import 'notificationsScreen.dart';
 import 'paymentMethodsScreen.dart';
 import 'privacyScreen.dart';
 import 'qrFullScreen.dart';
 import 'qrGenerateScreen.dart';
 import 'securityScreen.dart';
-
-var mobileNumber = '9012218994';
-var firstName = 'Shivam';
-var lastName = 'Goyal';
-var upiID = mobileNumber + '@upi';
+import 'ussdServiceScreen.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -54,7 +50,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               alignment: Alignment.center,
               child: QrImage(
                 data:
-                    'upi://pay?pa=$mobileNumber@upi&pn=$firstName $lastName&cu=INR&mode=02&purpose=00&orgid=189999&sign=MEQCHxuGu2MuYK7KM+73lS5q+4iUq8qxigXBJHCv+NeMyVsCIQClwuqF8p0T0kcHZqQKafyea+AF6rzuk45UFhW8+KCfAg==',
+                    'upi://pay?pa=$myMobileNumber@upi&pn=$myName&cu=INR&mode=02&purpose=00&orgid=189999&sign=MEQCHxuGu2MuYK7KM+73lS5q+4iUq8qxigXBJHCv+NeMyVsCIQClwuqF8p0T0kcHZqQKafyea+AF6rzuk45UFhW8+KCfAg==',
                 embeddedImage: AssetImage('assets/images/ic_launcher.png'),
                 embeddedImageStyle: QrEmbeddedImageStyle(size: Size(14, 14)),
               ),
@@ -64,12 +60,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: Column(
               children: <Widget>[
                 Text(
-                  '$upiID',
+                  '$myID',
                   style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
                 ),
                 SizedBox(height: 2.0),
                 Text(
-                  '$firstName $lastName',
+                  myName,
                   style: TextStyle(
                     fontSize: 36.0,
                     fontWeight: FontWeight.w500,
@@ -149,7 +145,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               }));
             },
           ),
-
           Divider(
             height: 0.0,
             color: Colors.black,
@@ -313,8 +308,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           ListTile(
             leading: IconButton(icon: Icon(FontAwesomeIcons.userSecret)),
-            title: Text("RSA Dashboard"),
-            subtitle: Text('Generate RSA Keys'),
+            title: Text("Security Dashboard"),
+            subtitle: Text('Send & Receive encrypted data'),
             trailing: IconButton(
               icon: Icon(
                 Icons.arrow_forward_ios,

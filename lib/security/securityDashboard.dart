@@ -1,11 +1,8 @@
-import '../components/appBar.dart';
-import '../components/constant.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:pointycastle/api.dart' as crypto;
-import 'dependencyProvider.dart';
 
-TextStyle get whiteTextStyle => TextStyle(color: Colors.white);
+import '../components/appBar.dart';
+import '../global.dart';
 
 class SecurityDashBoard extends StatefulWidget {
   @override
@@ -13,172 +10,132 @@ class SecurityDashBoard extends StatefulWidget {
 }
 
 class _SecurityDashBoardState extends State<SecurityDashBoard> {
-  /// The Future that will show the Pem String
-  Future<String> futureText;
-
-  /// Future to hold the reference to the KeyPair generated with PointyCastle
-  /// in order to extract the [crypto.PrivateKey] and [crypto.PublicKey]
-  Future<crypto.AsymmetricKeyPair<crypto.PublicKey, crypto.PrivateKey>>
-      futureKeyPair;
-
-  /// The current [crypto.AsymmetricKeyPair]
-  crypto.AsymmetricKeyPair keyPair;
-
-  /// With the helper [RsaKeyHelper] this method generates a
-  /// new [crypto.AsymmetricKeyPair<crypto.PublicKey, crypto.PrivateKey>
-  Future<crypto.AsymmetricKeyPair<crypto.PublicKey, crypto.PrivateKey>>
-      getKeyPair() {
-    var keyHelper = DependencyProvider.of(context).getRsaKeyHelper();
-    return keyHelper.computeRSAKeyPair(keyHelper.getSecureRandom());
-  }
-
-  /// GlobalKey to be used when showing the [Snackbar] for the successful
-  /// copy of the Key
-  final key = new GlobalKey<ScaffoldState>();
-
-  /// Text Editing Controller to retrieve the text to sign
-  TextEditingController _controller = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: key,
       appBar: TopBar(
-        title: 'RSA Dashboard',
-        child: kBackBtn,
+        title: 'Security Dashboard',
+        child: Icon(
+          Icons.arrow_back_ios,
+        ),
         onPressed: () {
           Navigator.of(context).pop();
         },
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              MaterialButton(
-                color: Theme.of(context).accentColor,
-                child: Text(
-                  "Generate new Key Pair",
-                  style: whiteTextStyle,
+      backgroundColor: Colors.white,
+      body: Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 100.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25.0)),
+              elevation: 4.0,
+              onPressed: () {
+                sendTransaction();
+              },
+              child: Container(
+                alignment: Alignment.center,
+                height: 50.0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 18.0,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      '  Send Transaction  ',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 18.0,
+                      color: Colors.white,
+                    ),
+                  ],
                 ),
-                onPressed: () {
-                  setState(() {
-                    // If there are any pemString being shown, then show an empty message
-                    futureText = Future.value("");
-                    // Generate a new keypair
-                    futureKeyPair = getKeyPair();
-                  });
-                },
               ),
-              Expanded(
-                flex: 1,
-                child: FutureBuilder<
-                        crypto.AsymmetricKeyPair<crypto.PublicKey,
-                            crypto.PrivateKey>>(
-                    future: futureKeyPair,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        // if we are waiting for a future to be completed, show a progress indicator
-                        return Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasData) {
-                        // Else, store the new keypair in this state and sbow two buttons
-                        this.keyPair = snapshot.data;
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
-                            MaterialButton(
-                              color: Colors.red,
-                              child: Text("Get Private Key",
-                                  style: whiteTextStyle),
-                              onPressed: () {
-                                setState(() {
-                                  // With the stored keypair, encode the private key to
-                                  // PKCS1 and show it
-                                  futureText = Future.value(
-                                      DependencyProvider.of(context)
-                                          .getRsaKeyHelper()
-                                          .encodePrivateKeyToPemPKCS1(
-                                              keyPair.privateKey));
-                                });
-                              },
-                            ),
-                            MaterialButton(
-                              color: Colors.green,
-                              child:
-                                  Text("Get Public Key", style: whiteTextStyle),
-                              onPressed: () {
-                                setState(() {
-                                  // With the stored keypair, encode the public key to
-                                  // PKCS1 and show it
-                                  futureText = Future.value(
-                                      DependencyProvider.of(context)
-                                          .getRsaKeyHelper()
-                                          .encodePublicKeyToPemPKCS1(
-                                              keyPair.publicKey));
-                                });
-                              },
-                            ),
-                            TextField(
-                              decoration:
-                                  InputDecoration(hintText: "Text to Sign"),
-                              controller: _controller,
-                            ),
-                            MaterialButton(
-                              color: Colors.black87,
-                              child: Text("Sign Text", style: whiteTextStyle),
-                              onPressed: () {
-                                setState(() {
-                                  futureText = Future.value(
-                                      DependencyProvider.of(context)
-                                          .getRsaKeyHelper()
-                                          .sign(_controller.text,
-                                              keyPair.privateKey));
-                                });
-                              },
-                            ),
-                          ],
-                        );
-                      } else {
-                        return Container();
-                      }
-                    }),
-              ),
-              Expanded(
-                flex: 2,
-                child: Card(
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    margin: EdgeInsets.all(8),
-                    child: FutureBuilder(
-                        future: futureText,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return SingleChildScrollView(
-                              // the inkwell is used to register the taps
-                              // in order to be able to copy the text
-                              child: InkWell(
-                                  onTap: () {
-                                    // Copies the data to the keyboard
-                                    Clipboard.setData(
-                                        new ClipboardData(text: snapshot.data));
-                                    key.currentState.showSnackBar(new SnackBar(
-                                      content: new Text("Copied to Clipboard"),
-                                    ));
-                                  },
-                                  child: Text(snapshot.data)),
-                            );
-                          } else {
-                            return Center(
-                              child: Text("Your keys will appear here"),
-                            );
-                          }
-                        }),
-                  ),
+              color: Colors.blue,
+            ),
+            SizedBox(height: 20.0),
+            RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25.0)),
+              elevation: 4.0,
+              onPressed: () {
+                getTransaction();
+              },
+              child: Container(
+                alignment: Alignment.center,
+                height: 50.0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.arrow_back_ios,
+                      size: 18.0,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      '  Get Transaction  ',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0),
+                    ),
+                    Icon(
+                      Icons.arrow_back_ios,
+                      size: 18.0,
+                      color: Colors.white,
+                    ),
+                  ],
                 ),
-              )
-            ],
-          ),
+              ),
+              color: Colors.green,
+            ),
+            SizedBox(height: 20.0),
+            RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25.0)),
+              elevation: 4.0,
+              onPressed: () {
+                setState(() {
+                  myHash = '';
+                });
+              },
+              child: Container(
+                alignment: Alignment.center,
+                height: 50.0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.restore,
+                      size: 18.0,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      '  Reset Hash',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0),
+                    ),
+                  ],
+                ),
+              ),
+              color: Colors.red,
+            )
+          ],
         ),
       ),
     );

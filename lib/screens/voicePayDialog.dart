@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:speech_recognition/speech_recognition.dart';
+
 import '../models/languageModel.dart';
 import 'languageScreen.dart';
 import 'paymentMethodScreen.dart';
 import 'paymentMethodsScreen.dart';
+import 'qrFullScreen.dart';
 import 'qrScanScreen.dart';
 import 'requestScreen.dart';
 import 'rewardzScreen.dart';
@@ -11,7 +16,6 @@ import 'sendScreen.dart';
 import 'settingsScreen.dart';
 import 'transactionHistoryScreen.dart';
 import 'ussdServiceScreen.dart';
-import 'qrFullScreen.dart';
 
 class VoicePay extends StatefulWidget {
   @override
@@ -26,6 +30,9 @@ class _VoicePayState extends State<VoicePay> {
   bool _isListening = false;
 
   LanguageModel selectedLang = languageData[0];
+
+  String myIntent;
+  var myIntentConfidence;
 
   @override
   initState() {
@@ -45,6 +52,181 @@ class _VoicePayState extends State<VoicePay> {
     _speech
         .activate()
         .then((res) => setState(() => _speechRecognitionAvailable = res));
+  }
+
+  getIntent() async {
+    print(
+        '----------------------------- Transcription --------------------------------\n' +
+            transcription);
+    print(
+        '----------------------------------------------------------------------------\n\n');
+    String url = 'http://52.66.101.188:5005/model/parse';
+    final headers = {'Content-Type': 'application/json'};
+    Map<String, dynamic> body = {"text": transcription};
+    String jsonBody = json.encode(body);
+    final encoding = Encoding.getByName('utf-8');
+    http.Response response = await http.post(url,
+        headers: headers, body: jsonBody, encoding: encoding);
+//    print(response.headers);
+//    print(response.statusCode);
+//    print(response.body);
+    myIntent = response.body.split('"')[5];
+    myIntentConfidence = response.body
+        .split('"')[8]
+        .replaceAll(',', '')
+        .replaceAll('}', '')
+        .replaceAll(':', '');
+    print(
+        "---------------------------- Intent Detected -------------------------------\n" +
+            myIntent);
+    print(
+        '----------------------------------------------------------------------------\n\n');
+    print(
+        "--------------------------- Intent Conficence ------------------------------\n" +
+            myIntentConfidence);
+    print(
+        '----------------------------------------------------------------------------\n\n\n\n\n');
+    navigate();
+  }
+
+  navigate() {
+    if (double.parse(myIntentConfidence) >= 0.75) {
+      if (myIntent == 'account.balance.check') {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+          return PaymentMethodScreen();
+        }));
+      } else if (myIntent == 'account.transactions.check') {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+          return TransactionHistoryScreen();
+        }));
+      } else if (myIntent == 'account.rewards.check') {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+          return RewardzScreen();
+        }));
+      } else if (transcription.contains('scan')) {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+          return QRScanScreen();
+        }));
+      } else if (myIntent == 'transfer.money.send') {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+          return SendScreen();
+        }));
+      } else if (transcription.contains('receive')) {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+          return QRFullScreen();
+        }));
+      } else if (myIntent == 'transfer.money.request') {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+          return RequestScreen();
+        }));
+      } else if (transcription.contains('accounts')) {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+          return PaymentMethodsScreen();
+        }));
+      } else if (transcription.contains('language')) {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+          return LanguageScreen();
+        }));
+      } else if (transcription.contains('USSD')) {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+          return USSDServiceScreen();
+        }));
+      } else if (transcription.contains('logout')) {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+          return TransactionHistoryScreen();
+        }));
+      } else if (transcription.contains('feedback')) {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+          return TransactionHistoryScreen();
+        }));
+      } else if (transcription.contains('settings')) {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+          return SettingsScreen();
+        }));
+      }
+    }
+  }
+
+  navigateHard() {
+    if (transcription.contains('balance')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return PaymentMethodScreen();
+      }));
+    } else if (transcription.contains('history')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return TransactionHistoryScreen();
+      }));
+    } else if (transcription.contains('rewards')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return RewardzScreen();
+      }));
+    } else if (transcription.contains('scan')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return QRScanScreen();
+      }));
+    } else if (transcription.contains('send')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return SendScreen();
+      }));
+    } else if (transcription.contains('receive')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return QRFullScreen();
+      }));
+    } else if (transcription.contains('request')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return RequestScreen();
+      }));
+    } else if (transcription.contains('accounts')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return PaymentMethodsScreen();
+      }));
+    } else if (transcription.contains('language')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return LanguageScreen();
+      }));
+    } else if (transcription.contains('USSD')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return USSDServiceScreen();
+      }));
+    } else if (transcription.contains('logout')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return TransactionHistoryScreen();
+      }));
+    } else if (transcription.contains('feedback')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return TransactionHistoryScreen();
+      }));
+    } else if (transcription.contains('settings')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return SettingsScreen();
+      }));
+    }
   }
 
   @override
@@ -167,9 +349,9 @@ class _VoicePayState extends State<VoicePay> {
     );
   }
 
-  void start() => _speech
-      .listen(locale: selectedLang.languageCode)
-      .then((result) => print('_MyAppState.start => result $result'));
+  void start() => _speech.listen(locale: selectedLang.languageCode);
+
+//      .then((result) => print('_MyAppState.start => result $result'));
 
   void cancel() =>
       _speech.cancel().then((result) => setState(() => _isListening = result));
@@ -182,7 +364,7 @@ class _VoicePayState extends State<VoicePay> {
       setState(() => _speechRecognitionAvailable = result);
 
   void onCurrentLocale(String locale) {
-    print('_MyAppState.onCurrentLocale... $locale');
+//    print('_MyAppState.onCurrentLocale... $locale');
   }
 
   void onRecognitionStarted() => setState(() => _isListening = true);
@@ -195,72 +377,8 @@ class _VoicePayState extends State<VoicePay> {
     setState(() {
       return _isListening = false;
     });
-    if (transcription.contains('balance')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return PaymentMethodScreen();
-      }));
-    } else if (transcription.contains('history')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return TransactionHistoryScreen();
-      }));
-    } else if (transcription.contains('rewards')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return RewardzScreen();
-      }));
-    } else if (transcription.contains('scan')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return QRScanScreen();
-      }));
-    } else if (transcription.contains('send')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return SendScreen();
-      }));
-    } else if (transcription.contains('receive')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return QRFullScreen();
-      }));
-    } else if (transcription.contains('request')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return RequestScreen();
-      }));
-    } else if (transcription.contains('accounts')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return PaymentMethodsScreen();
-      }));
-    } else if (transcription.contains('language')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return LanguageScreen();
-      }));
-    } else if (transcription.contains('USSD')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return USSDServiceScreen();
-      }));
-    } else if (transcription.contains('logout')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return TransactionHistoryScreen();
-      }));
-    } else if (transcription.contains('feedback')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return TransactionHistoryScreen();
-      }));
-    } else if (transcription.contains('settings')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return SettingsScreen();
-      }));
-    }
+//    getIntent();
+    navigateHard();
   }
 
   void errorHandler() => activateSpeechRecognizer();

@@ -1,10 +1,8 @@
-import '../components/appBar.dart';
-import '../models/transactionModel.dart';
 import 'package:flutter/material.dart';
 
+import '../components/appBar.dart';
+import '../global.dart';
 import 'transactionDetailScreen.dart';
-
-String myID = 'shivamgoyal@upi';
 
 class TransactionHistoryScreen extends StatefulWidget {
   @override
@@ -13,6 +11,11 @@ class TransactionHistoryScreen extends StatefulWidget {
 }
 
 class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,96 +30,132 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
         ),
       ),
       backgroundColor: Colors.white,
-      body: ListView.builder(
-        itemCount: transactionData.length,
-        itemBuilder: (BuildContext context, index) => Column(
-          children: <Widget>[
-            myID == transactionData[index].payerID
-                ? ListTile(
-                    leading: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          backgroundImage:
-                              AssetImage(transactionData[index].payeeAvatarUrl),
+      body: FutureBuilder(
+        future: getTransaction(),
+        builder: (context, snapshot) {
+//          if (snapshot.hasData) {
+          return ListView.builder(
+            itemCount: listDecryptedTransaction.length,
+            itemBuilder: (BuildContext context, index) => Column(
+              children: <Widget>[
+                myID == listDecryptedTransaction[index].split(',')[4]
+                    ? ListTile(
+                        leading: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            CircleAvatar(
+                              backgroundColor: Colors.blue,
+                              child: Text(
+                                listDecryptedTransaction[index].split(',')[0]
+                                    [0],
+                                style: TextStyle(
+                                    fontSize: 22.0,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    title: Text(transactionData[index].payeeName),
-                    subtitle: Text(transactionData[index].payeeID),
-                    trailing: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          transactionData[index].date +
-                              ' • ' +
-                              transactionData[index].time,
-                          style: TextStyle(fontSize: 12.0),
+                        title:
+                            Text(listDecryptedTransaction[index].split(',')[0]),
+                        subtitle:
+                            Text(listDecryptedTransaction[index].split(',')[1]),
+                        trailing: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              listDecryptedTransaction[index]
+                                      .split(',')[8]
+                                      .split(' ')[0] +
+                                  ' • ' +
+                                  listDecryptedTransaction[index]
+                                      .split(',')[8]
+                                      .split(' ')[1],
+                              style: TextStyle(fontSize: 12.0),
+                            ),
+                            Text(
+                              '-' +
+                                  ' ₹ ' +
+                                  listDecryptedTransaction[index].split(',')[6],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18.0,
+                                  color: Colors.red),
+                            ),
+                          ],
                         ),
-                        Text(
-                          '-' + ' ₹ ' + transactionData[index].amount,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 18.0,
-                              color: Colors.red),
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) {
+                            return TransactionDetailScreen(index: index);
+                          }));
+                        },
+                      )
+                    : ListTile(
+                        leading: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            CircleAvatar(
+                              backgroundColor: Colors.blue,
+                              child: Text(
+                                listDecryptedTransaction[index].split(',')[3]
+                                    [0],
+                                style: TextStyle(
+                                    fontSize: 22.0,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (BuildContext context) {
-                        return TransactionDetailScreen(index: index);
-                      }));
-                    },
-                  )
-                : ListTile(
-                    leading: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          backgroundImage:
-                              AssetImage(transactionData[index].payerAvatarUrl),
+                        title:
+                            Text(listDecryptedTransaction[index].split(',')[3]),
+                        subtitle:
+                            Text(listDecryptedTransaction[index].split(',')[4]),
+                        trailing: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              listDecryptedTransaction[index]
+                                      .split(',')[8]
+                                      .split(' ')[0] +
+                                  ' • ' +
+                                  listDecryptedTransaction[index]
+                                      .split(',')[8]
+                                      .split(' ')[1],
+                              style: TextStyle(fontSize: 12.0),
+                            ),
+                            Text(
+                              '+' +
+                                  ' ₹ ' +
+                                  listDecryptedTransaction[index].split(',')[6],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18.0,
+                                  color: Colors.green),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    title: Text(transactionData[index].payerName),
-                    subtitle: Text(transactionData[index].payerID),
-                    trailing: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          transactionData[index].date +
-                              ' • ' +
-                              transactionData[index].time,
-                          style: TextStyle(fontSize: 12.0),
-                        ),
-                        Text(
-                          '+' + ' ₹ ' + transactionData[index].amount,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 18.0,
-                              color: Colors.green),
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (BuildContext context) {
-                        return TransactionDetailScreen(index: index);
-                      }));
-                    },
-                  ),
-            Divider(
-              height: 0.0,
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) {
+                            return TransactionDetailScreen(index: index);
+                          }));
+                        },
+                      ),
+                Divider(
+                  height: 0.0,
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+//          }
+//          return Container(
+//              alignment: Alignment.center,
+//              child: CircularProgressIndicator(backgroundColor: Colors.black));
+        },
       ),
     );
   }

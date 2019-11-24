@@ -1,14 +1,15 @@
-import '../components/appBar.dart';
-import '../components/constant.dart';
-import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:flutter/services.dart';
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
-import 'dart:io';
+
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+
+import '../components/appBar.dart';
 
 class QRGenerateScreen extends StatefulWidget {
   @override
@@ -31,7 +32,9 @@ class QRGenerateScreenState extends State<QRGenerateScreen> {
       backgroundColor: Colors.white,
       appBar: TopBar(
         title: 'QR Code Generator',
-        child: kBackBtn,
+        child: Icon(
+          Icons.arrow_back_ios,
+        ),
         onPressed: () {
           Navigator.of(context).pop();
         },

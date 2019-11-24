@@ -1,7 +1,6 @@
-import '../components/appBar.dart';
-import '../components/constant.dart';
 import 'package:flutter/material.dart';
 
+import '../components/appBar.dart';
 import 'paymentMethodScreen.dart';
 
 class PaymentMethodsScreen extends StatefulWidget {
@@ -15,7 +14,9 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
     return Scaffold(
       appBar: TopBar(
         title: 'Payment Methods',
-        child: kBackBtn,
+        child: Icon(
+          Icons.arrow_back_ios,
+        ),
         onPressed: () {
           Navigator.of(context).pop();
         },
