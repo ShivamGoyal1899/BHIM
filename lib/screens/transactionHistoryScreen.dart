@@ -31,7 +31,7 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
       ),
       backgroundColor: Colors.white,
       body: FutureBuilder(
-        future: getTransaction(),
+        future: getAllTransactions(),
         builder: (context, snapshot) {
 //          if (snapshot.hasData) {
           return ListView.builder(

@@ -144,11 +144,6 @@ class _MyDrawerState extends State<MyDrawer> {
         icon: new Icon(Icons.history),
       ),
       DrawerList(
-        index: DrawerIndex.Offers,
-        labelName: 'Offers',
-        icon: new Icon(Icons.local_offer),
-      ),
-      DrawerList(
         index: DrawerIndex.Rewardz,
         labelName: 'Rewardz',
         icon: new Icon(Icons.card_giftcard),
@@ -156,7 +151,7 @@ class _MyDrawerState extends State<MyDrawer> {
       DrawerList(
         index: DrawerIndex.Settings,
         labelName: 'Settings',
-        icon: new Icon(Icons.person),
+        icon: new Icon(Icons.settings),
       ),
       DrawerList(
         index: DrawerIndex.About,

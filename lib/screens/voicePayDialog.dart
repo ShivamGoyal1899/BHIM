@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:speech_recognition/speech_recognition.dart';
 
+import '../global.dart';
 import '../models/languageModel.dart';
 import 'languageScreen.dart';
 import 'paymentMethodScreen.dart';
 import 'paymentMethodsScreen.dart';
 import 'qrFullScreen.dart';
-import 'qrScanScreen.dart';
 import 'requestScreen.dart';
 import 'rewardzScreen.dart';
 import 'sendScreen.dart';
@@ -107,10 +107,8 @@ class _VoicePayState extends State<VoicePay> {
           return RewardzScreen();
         }));
       } else if (transcription.contains('scan')) {
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-          return QRScanScreen();
-        }));
+        Navigator.of(context).pop();
+        scan();
       } else if (myIntent == 'transfer.money.send') {
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
@@ -177,10 +175,8 @@ class _VoicePayState extends State<VoicePay> {
         return RewardzScreen();
       }));
     } else if (transcription.contains('scan')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return QRScanScreen();
-      }));
+      Navigator.of(context).pop();
+      scan();
     } else if (transcription.contains('send')) {
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {

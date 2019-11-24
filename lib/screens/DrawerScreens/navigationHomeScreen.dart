@@ -39,37 +39,74 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Leave App"),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(25),
+            ),
+          ),
+          title: Text(
+            'Leave BHIM',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 25.0),
+          ),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text("Are you sure you want to leave?\n"),
+              Text("Are you sure you want to exit?\n"),
               Row(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   GestureDetector(
-                    child: Text(
-                      "Cancel",
-                      style: TextStyle(
-                          color: Colors.blue, fontWeight: FontWeight.w700),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.black,
+                            size: 16.0,
+                          ),
+                        ),
+                        Text(
+                          'Stay',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 18.0),
+                        ),
+                      ],
                     ),
                     onTap: () {
                       Navigator.of(context).pop(false);
                     },
                   ),
-                  SizedBox(width: 25.0),
+                  SizedBox(height: 20.0),
                   GestureDetector(
-                    child: Text(
-                      "Leave",
-                      style: TextStyle(
-                          color: Colors.blue, fontWeight: FontWeight.w700),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Leave',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 18.0),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.black,
+                            size: 16.0,
+                          ),
+                        ),
+                      ],
                     ),
                     onTap: () {
                       Navigator.of(context).pop(true);
                     },
-                  )
+                  ),
                 ],
               ),
             ],

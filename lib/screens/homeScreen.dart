@@ -1,9 +1,8 @@
 import 'package:BHIM/screens/requestScreen.dart';
 import 'package:BHIM/screens/sendScreen.dart';
-import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
+import '../global.dart';
 import 'voicePayDialog.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,11 +16,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        foregroundColor: Colors.blue,
+        backgroundColor: Colors.white,
         elevation: 4.0,
-        child: Icon(
+        icon: Icon(
           Icons.mic_none,
           size: 25,
+        ),
+        label: Text(
+          'VoicePay',
+          style: TextStyle(fontSize: 16.0),
         ),
         onPressed: () {
           showDialog(
@@ -32,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       backgroundColor: Colors.white,
       body: ListView(
         padding: EdgeInsets.only(top: 40.0),
@@ -172,30 +177,187 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          SizedBox(height: 200),
+          SizedBox(height: 20.0),
+          Container(
+            height: 550.0,
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.1, 0.3, 0.8, 0.9],
+                colors: [
+                  Colors.orange[900],
+                  Colors.orange[500],
+                  Colors.orange[100],
+                  Colors.white10,
+                ],
+              ),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
+                bottomLeft: Radius.circular(0),
+                bottomRight: Radius.circular(0),
+              ),
+            ),
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 25.0),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 50.0),
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25),
+                      topRight: Radius.circular(25),
+                      bottomLeft: Radius.circular(25),
+                      bottomRight: Radius.circular(25),
+                    ),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text('UTILITY SERVICES',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 25.0,
+                          color: Colors.black)),
+                ),
+                SizedBox(height: 30.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    ActionCard(
+                      title: 'Mobile Prepaid',
+                      icon: Icons.phone_iphone,
+                    ),
+                    ActionCard(
+                      title: 'Movie Tickets',
+                      icon: Icons.local_movies,
+                    ),
+                    ActionCard(
+                      title: 'Electricity',
+                      icon: Icons.lightbulb_outline,
+                    ),
+                    ActionCard(
+                      title: 'Flight Tickets',
+                      icon: Icons.flight_takeoff,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    ActionCard(
+                      title: 'DTH',
+                      icon: Icons.live_tv,
+                    ),
+                    ActionCard(
+                      title: 'Shopping',
+                      icon: Icons.shopping_cart,
+                    ),
+                    ActionCard(
+                      title: 'Food',
+                      icon: Icons.fastfood,
+                    ),
+                    ActionCard(
+                      title: 'Broadband',
+                      icon: Icons.wifi,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    ActionCard(
+                      title: 'Pets',
+                      icon: Icons.pets,
+                    ),
+                    ActionCard(
+                      title: 'Challan',
+                      icon: Icons.traffic,
+                    ),
+                    ActionCard(
+                      title: 'Fees',
+                      icon: Icons.school,
+                    ),
+                    ActionCard(
+                      title: 'Credit Card',
+                      icon: Icons.credit_card,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    ActionCard(
+                      title: 'Donation',
+                      icon: Icons.local_florist,
+                    ),
+                    ActionCard(
+                      title: 'Train Tickets',
+                      icon: Icons.train,
+                    ),
+                    ActionCard(
+                      title: 'Nearby Deals',
+                      icon: Icons.location_on,
+                    ),
+                    ActionCard(
+                      title: 'More',
+                      icon: Icons.more_horiz,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
   }
+}
 
-  Future scan() async {
-    try {
-      String barcode = await BarcodeScanner.scan();
-      setState(() => this.barcode = barcode);
-    } on PlatformException catch (e) {
-      if (e.code == BarcodeScanner.CameraAccessDenied) {
-        setState(() {
-          this.barcode = 'The user did not grant the camera permission!';
-        });
-      } else {
-        setState(() => this.barcode = 'Unknown error: $e');
-      }
-    } on FormatException {
-      setState(() => this.barcode =
-          'null (User returned using the "back"-button before scanning anything. Result)');
-    } catch (e) {
-      setState(() => this.barcode = 'Unknown error: $e');
-    }
-    print(barcode);
+class ActionCard extends StatelessWidget {
+  final String title;
+  final IconData icon;
+
+  const ActionCard({Key key, this.title, this.icon}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.22,
+      child: Column(
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.black),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(5),
+                topRight: Radius.circular(5),
+                bottomLeft: Radius.circular(5),
+                bottomRight: Radius.circular(5),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Icon(icon, size: 30.0),
+            ),
+          ),
+          SizedBox(height: 8.0),
+          Container(
+            alignment: Alignment.center,
+            child: Text(title, style: TextStyle(fontSize: 13.0)),
+          ),
+        ],
+      ),
+    );
   }
 }

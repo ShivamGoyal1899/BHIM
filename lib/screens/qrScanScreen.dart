@@ -1,10 +1,7 @@
-import 'dart:async';
-
-import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../components/appBar.dart';
+import '../global.dart';
 
 class QRScanScreen extends StatefulWidget {
   @override
@@ -43,7 +40,9 @@ class _ScanState extends State<QRScanScreen> {
                   color: Colors.blue,
                   textColor: Colors.white,
                   splashColor: Colors.blueGrey,
-                  onPressed: scan,
+                  onPressed: () {
+                    scan();
+                  },
                   child: const Text('Pay Now')),
             ),
             Padding(
@@ -57,25 +56,5 @@ class _ScanState extends State<QRScanScreen> {
         ),
       ),
     );
-  }
-
-  Future scan() async {
-    try {
-      String barcode = await BarcodeScanner.scan();
-      setState(() => this.barcode = barcode);
-    } on PlatformException catch (e) {
-      if (e.code == BarcodeScanner.CameraAccessDenied) {
-        setState(() {
-          this.barcode = 'The user did not grant the camera permission!';
-        });
-      } else {
-        setState(() => this.barcode = 'Unknown error: $e');
-      }
-    } on FormatException {
-      setState(() => this.barcode =
-          'null (User returned using the "back"-button before scanning anything. Result)');
-    } catch (e) {
-      setState(() => this.barcode = 'Unknown error: $e');
-    }
   }
 }

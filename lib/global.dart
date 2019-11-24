@@ -1,6 +1,8 @@
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:http/http.dart' as http;
 import 'package:random_string/random_string.dart';
 import 'package:simple_rsa/simple_rsa.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 String publicKey =
     "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvt4Iixd3XigxqLLHvMp4PDKklFGFbuqnO96AoUdcLl8IHdv6o3gUJnCz3fpj7VFXQzBD0rZ4aOJhJrctfi9F6OGmcazpj7BVk3B1YbjEVLJf3fsZ27PlnwBd8y4te3EcLdUDlFOKErXXb6kCzd4h6azAKik9VYrIn/nnpfuVJLBTenuJEcnHJRY8MyWlL7F3epikHOvqCQRtDcmEqbrMJqLVCLXVjYlZTnPyrzemQ+tGcpVaKKwsjb1EDR9JgDP/Xkpy8eZ18vCDHncpUp2k7FoBM1pg6n1PBMCYGYMN5J76dX7bjeRVeFkRR2Ajh2Ajw2/UL1C+guDeALlUO92fywIDAQAB";
@@ -30,7 +32,7 @@ List<String> users = [
 
 List<String> listDecryptedTransaction = [];
 
-Future sendTransaction() async {
+Future sendMoneyTransaction() async {
   String myTID = 'NPC' + randomNumeric(32).toString();
   print(
       '------------------------------ Previous Hash -------------------------------\n' +
@@ -81,7 +83,58 @@ Future sendTransaction() async {
       '                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                         \n\n');
 }
 
-Future getTransaction() async {
+Future requestMoneyTransaction() async {
+  String myTID = 'NPC' + randomNumeric(32).toString();
+  print(
+      '------------------------------ Previous Hash -------------------------------\n' +
+          myHash);
+  print(
+      '----------------------------------------------------------------------------\n\n');
+  print(
+      '----------------------------- Transaction ID -------------------------------\n' +
+          myTID);
+  print(
+      '----------------------------------------------------------------------------\n\n');
+  int selectedUserNumber = randomBetween(0, users.length - 1);
+  String text =
+      '$myName,$myID,$myMobileNumber,${users[selectedUserNumber]},${users[selectedUserNumber].toLowerCase().replaceAll(' ', '') + '@upi'},${'+91' + randomBetween(7000000000, 9999999999).toString()},${randomBetween(10, 2000)},$myTID,${DateTime.now()},pending';
+  print(
+      '--------------------------------- Text -------------------------------------\n' +
+          text);
+  print(
+      '----------------------------------------------------------------------------\n\n');
+  String encryptedText = await encryptString(text, publicKey);
+  encryptedText = encryptedText.replaceAll('\n', '');
+  print(
+      '----------------------------- Encrypted Text -------------------------------\n' +
+          encryptedText);
+  print(
+      '----------------------------------------------------------------------------\n');
+  String url = 'https://npci-database.herokuapp.com/contact';
+  var body = {
+    'status': myHash == '' ? 'Y' : 'N',
+    'hash': myHash == '' ? '' : myHash,
+    'tid': myTID,
+    'main': encryptedText,
+  };
+  var response = await http.post(url, body: body);
+  myHash = response.body;
+  print(
+      '------------------------------ Updated Hash --------------------------------\n' +
+          myHash);
+  print(
+      '----------------------------------------------------------------------------\n');
+  print(
+      '                                   _                                        \n');
+  print(
+      '                               .__(.)<  (AeroCoders)                        \n');
+  print(
+      '                                \\___)                                       \n');
+  print(
+      '                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                         \n\n');
+}
+
+Future getAllTransactions() async {
   listDecryptedTransaction.clear();
   print(
       '------------------------------ Recorded Hash -------------------------------\n' +
@@ -100,12 +153,13 @@ Future getTransaction() async {
       '----------------------------------------------------------------------------\n\n');
   print(
       '------------------------ All Decrypted Transaction -------------------------\n');
-  for (int i = 0; i < listEncryptedTransaction.length - 1; i++) {
+  for (int i = listEncryptedTransaction.length - 2; i >= 0; i--) {
     String toBeAddedTransaction =
         await decryptString(listEncryptedTransaction[i], privateKey);
     print(toBeAddedTransaction);
     listDecryptedTransaction.add(toBeAddedTransaction);
   }
+//  listDecryptedTransaction = listEncryptedTransaction.reversed.toList();
   print(
       '----------------------------------------------------------------------------\n');
   print(
@@ -116,4 +170,13 @@ Future getTransaction() async {
       '                                \\___)                                       \n');
   print(
       '                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                         \n\n');
+}
+
+Future scan() async {
+  String barcode = await BarcodeScanner.scan();
+  if (await canLaunch(barcode)) {
+    await launch(barcode);
+  } else {
+    throw 'Could not launch $barcode';
+  }
 }
