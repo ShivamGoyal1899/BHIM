@@ -43,10 +43,11 @@ class _ScratchCardState extends State<ScratchCard> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  width: 150.0,
-                  height: 150.0,
-                  child: Image.asset('assets/images/reward.jpg'),
+                  width: 125.0,
+                  height: 125.0,
+                  child: Image.asset('assets/images/reward.png'),
                 ),
+                SizedBox(height: 16),
                 Text(
                   'You won',
                   style: Theme.of(context)

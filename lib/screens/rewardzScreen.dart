@@ -129,10 +129,11 @@ class ActionCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              width: 100.0,
-              height: 100.0,
-              child: Image.asset('assets/images/reward.jpg'),
+              width: 75.0,
+              height: 75.0,
+              child: Image.asset('assets/images/reward.png'),
             ),
+            SizedBox(height: 8),
             Text(
               title,
               style: Theme.of(context).textTheme.title.copyWith(

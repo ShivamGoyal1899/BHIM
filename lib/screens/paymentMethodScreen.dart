@@ -1,3 +1,4 @@
+import 'package:BHIM/global.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -46,12 +47,12 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
           ),
           ListTile(
             title: Text("Account information"),
-            subtitle: Text('Shivam Goyal' + ' • ' + '9012218994'),
+            subtitle: Text(myName + ' • ' + myMobileNumber.replaceAll('+91', '')),
             onTap: () {},
           ),
           ListTile(
             title: Text("UPI ID"),
-            subtitle: Text('9012218994@upi'),
+            subtitle: Text(myID),
             onTap: () {},
           ),
           Divider(

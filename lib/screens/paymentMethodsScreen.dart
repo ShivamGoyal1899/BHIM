@@ -37,6 +37,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
             ),
             title: Text("State Bank of India 3090"),
             subtitle: Text('Bank Account'),
+            trailing: Text('PRIMARY'),
             onTap: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {
@@ -77,7 +78,6 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
             ),
             title: Text("Paytm Payments Bank XX94"),
             subtitle: Text('Bank Account'),
-            trailing: Text('PRIMARY'),
             onTap: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {

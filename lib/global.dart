@@ -157,7 +157,9 @@ Future getAllTransactions() async {
     String toBeAddedTransaction =
         await decryptString(listEncryptedTransaction[i], privateKey);
     print(toBeAddedTransaction);
-    listDecryptedTransaction.add(toBeAddedTransaction);
+    if (!listEncryptedTransaction.contains(toBeAddedTransaction)) {
+      listDecryptedTransaction.add(toBeAddedTransaction);
+    }
   }
 //  listDecryptedTransaction = listEncryptedTransaction.reversed.toList();
   print(

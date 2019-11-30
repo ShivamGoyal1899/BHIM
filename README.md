@@ -14,11 +14,11 @@ The source code is **100% Dart**, and everything resides in the [/lib](https://g
 [![Open Source Love](https://img.shields.io/badge/Open%20Source-seagreen?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![License](https://img.shields.io/badge/license-MIT-red.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![Repo Size](https://img.shields.io/github/repo-size/ShivamGoyal1899/BHIM?style=for-the-badge)](https://github.com/ShivamGoyal1899/BHIM)
-[![Release](https://img.shields.io/github/v/release/ShivamGoyal1899/BHIM?style=for-the-badge&include_prereleases&sort=semver)](https://github.com/ShivamGoyal1899/BHIM/releases/download/v0.7.0-beta/BHIM.v0.7.0-beta.apk)
+[![Release](https://img.shields.io/github/v/release/ShivamGoyal1899/BHIM?style=for-the-badge&include_prereleases&sort=semver)](https://github.com/ShivamGoyal1899/BHIM/releases/download/v0.9.0-beta/BHIM.v0.9.0-beta.apk)
 
 
 ## Download Android App
-[![here](https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://matheusitsolution.com/wp-content/themes/matheus/images/downloadapp.png)](https://github.com/ShivamGoyal1899/BHIM/releases/download/v0.7.0-beta/BHIM.v0.7.0-beta.apk)
+[![here](https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://matheusitsolution.com/wp-content/themes/matheus/images/downloadapp.png)](https://github.com/ShivamGoyal1899/BHIM/releases/download/v0.9.0-beta/BHIM.v0.9.0-beta.apk)
 
 ## Tech Stack
 * Flutter
