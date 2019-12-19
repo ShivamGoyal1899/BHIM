@@ -1,3 +1,4 @@
+import 'package:BHIM/screens/background.dart';
 import 'package:BHIM/screens/requestScreen.dart';
 import 'package:BHIM/screens/sendScreen.dart';
 import 'package:flutter/material.dart';
@@ -39,99 +40,20 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       backgroundColor: Colors.white,
-      body: ListView(
-        padding: EdgeInsets.only(top: 40.0),
+      body: Stack(
         children: <Widget>[
-          Row(
+          Background(isImage: true),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(10.0),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomRight,
-                    end: Alignment.topLeft,
-                    stops: [0.1, 0.3, 0.7, 0.9],
-                    colors: [
-                      Colors.green[900],
-                      Colors.green[700],
-                      Colors.orange[500],
-                      Colors.orange[300],
-                    ],
-                  ),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(0),
-                    topRight: Radius.circular(25),
-                    bottomLeft: Radius.circular(0),
-                    bottomRight: Radius.circular(25),
-                  ),
-                ),
-                child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  height: 60.0,
-                  width: 60.0,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25),
-                      bottomLeft: Radius.circular(25),
-                      bottomRight: Radius.circular(25),
-                    ),
-                  ),
-                  child: Image.asset('assets/images/logo.png'),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(15.0),
-                width: MediaQuery.of(context).size.width * 0.75,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    stops: [0.1, 0.5, 0.7, 0.9],
-                    colors: [
-                      Colors.blue[900],
-                      Colors.blue[700],
-                      Colors.blue[500],
-                      Colors.blue[300],
-                    ],
-                  ),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    topRight: Radius.circular(0),
-                    bottomLeft: Radius.circular(25),
-                    bottomRight: Radius.circular(0),
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    GestureDetector(
-                        child: Container(
-                          padding: EdgeInsets.all(15.0),
-                          height: 75.0,
-                          width: 75.0,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(25),
-                              topRight: Radius.circular(25),
-                              bottomLeft: Radius.circular(25),
-                              bottomRight: Radius.circular(25),
-                            ),
-                          ),
-                          child: Image.asset('assets/images/send.png'),
-                        ),
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) {
-                            return SendScreen();
-                          }));
-                        }),
-                    GestureDetector(
+              SizedBox(height: 50.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  GestureDetector(
                       child: Container(
                         padding: EdgeInsets.all(15.0),
                         height: 75.0,
@@ -145,178 +67,128 @@ class _HomeScreenState extends State<HomeScreen> {
                             bottomRight: Radius.circular(25),
                           ),
                         ),
-                        child: Image.asset('assets/images/receive.png'),
+                        child: Image.asset('assets/images/send.png'),
                       ),
                       onTap: () {
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (BuildContext context) {
-                          return RequestScreen();
+                          return SendScreen();
                         }));
-                      },
-                    ),
-                    GestureDetector(
-                      child: Container(
-                        padding: EdgeInsets.all(20.0),
-                        height: 75.0,
-                        width: 75.0,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(25),
-                            topRight: Radius.circular(25),
-                            bottomLeft: Radius.circular(25),
-                            bottomRight: Radius.circular(25),
-                          ),
+                      }),
+                  GestureDetector(
+                    child: Container(
+                      padding: EdgeInsets.all(15.0),
+                      height: 75.0,
+                      width: 75.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25),
+                          bottomLeft: Radius.circular(25),
+                          bottomRight: Radius.circular(25),
                         ),
-                        child: Image.asset('assets/images/qr-code.png'),
                       ),
-                      onTap: () => scan(),
+                      child: Image.asset('assets/images/receive.png'),
                     ),
-                  ],
-                ),
+                    onTap: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (BuildContext context) {
+                        return RequestScreen();
+                      }));
+                    },
+                  ),
+                  GestureDetector(
+                    child: Container(
+                      padding: EdgeInsets.all(20.0),
+                      height: 75.0,
+                      width: 75.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25),
+                          bottomLeft: Radius.circular(25),
+                          bottomRight: Radius.circular(25),
+                        ),
+                      ),
+                      child: Image.asset('assets/images/qr-code.png'),
+                    ),
+                    onTap: () => scan(),
+                  ),
+                ],
+              ),
+              SizedBox(height: 30.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  ActionCard(
+                    title: 'Mobile Prepaid',
+                    icon: Icons.phone_iphone,
+                  ),
+                  ActionCard(
+                    title: 'Movie Tickets',
+                    icon: Icons.local_movies,
+                  ),
+                  ActionCard(
+                    title: 'Electricity',
+                    icon: Icons.lightbulb_outline,
+                  ),
+                  ActionCard(
+                    title: 'Flight Tickets',
+                    icon: Icons.flight_takeoff,
+                  ),
+                ],
+              ),
+              SizedBox(height: 30.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  ActionCard(
+                    title: 'DTH',
+                    icon: Icons.live_tv,
+                  ),
+                  ActionCard(
+                    title: 'Shopping',
+                    icon: Icons.shopping_cart,
+                  ),
+                  ActionCard(
+                    title: 'Food',
+                    icon: Icons.fastfood,
+                  ),
+                  ActionCard(
+                    title: 'Broadband',
+                    icon: Icons.wifi,
+                  ),
+                ],
+              ),
+              SizedBox(height: 30.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  ActionCard(
+                    title: 'Donation',
+                    icon: Icons.local_florist,
+                  ),
+                  ActionCard(
+                    title: 'Train Tickets',
+                    icon: Icons.train,
+                  ),
+                  ActionCard(
+                    title: 'Nearby Deals',
+                    icon: Icons.location_on,
+                  ),
+                  ActionCard(
+                    title: 'More',
+                    icon: Icons.more_horiz,
+                  ),
+                ],
               ),
             ],
           ),
-          SizedBox(height: 20.0),
-          Container(
-            height: 550.0,
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: [0.1, 0.3, 0.8, 0.9],
-                colors: [
-                  Colors.orange[900],
-                  Colors.orange[500],
-                  Colors.orange[100],
-                  Colors.white10,
-                ],
-              ),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(25),
-                topRight: Radius.circular(25),
-                bottomLeft: Radius.circular(0),
-                bottomRight: Radius.circular(0),
-              ),
-            ),
-            child: Column(
-              children: <Widget>[
-                SizedBox(height: 25.0),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 50.0),
-                  height: 50.0,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25),
-                      bottomLeft: Radius.circular(25),
-                      bottomRight: Radius.circular(25),
-                    ),
-                  ),
-                  alignment: Alignment.center,
-                  child: Text('UTILITY SERVICES',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 25.0,
-                          color: Colors.black)),
-                ),
-                SizedBox(height: 30.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    ActionCard(
-                      title: 'Mobile Prepaid',
-                      icon: Icons.phone_iphone,
-                    ),
-                    ActionCard(
-                      title: 'Movie Tickets',
-                      icon: Icons.local_movies,
-                    ),
-                    ActionCard(
-                      title: 'Electricity',
-                      icon: Icons.lightbulb_outline,
-                    ),
-                    ActionCard(
-                      title: 'Flight Tickets',
-                      icon: Icons.flight_takeoff,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 30.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    ActionCard(
-                      title: 'DTH',
-                      icon: Icons.live_tv,
-                    ),
-                    ActionCard(
-                      title: 'Shopping',
-                      icon: Icons.shopping_cart,
-                    ),
-                    ActionCard(
-                      title: 'Food',
-                      icon: Icons.fastfood,
-                    ),
-                    ActionCard(
-                      title: 'Broadband',
-                      icon: Icons.wifi,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 30.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    ActionCard(
-                      title: 'Pets',
-                      icon: Icons.pets,
-                    ),
-                    ActionCard(
-                      title: 'Challan',
-                      icon: Icons.traffic,
-                    ),
-                    ActionCard(
-                      title: 'Fees',
-                      icon: Icons.school,
-                    ),
-                    ActionCard(
-                      title: 'Credit Card',
-                      icon: Icons.credit_card,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 30.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    ActionCard(
-                      title: 'Donation',
-                      icon: Icons.local_florist,
-                    ),
-                    ActionCard(
-                      title: 'Train Tickets',
-                      icon: Icons.train,
-                    ),
-                    ActionCard(
-                      title: 'Nearby Deals',
-                      icon: Icons.location_on,
-                    ),
-                    ActionCard(
-                      title: 'More',
-                      icon: Icons.more_horiz,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          )
         ],
       ),
     );

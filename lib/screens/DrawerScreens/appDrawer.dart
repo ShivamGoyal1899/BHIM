@@ -205,9 +205,13 @@ class _MyDrawerState extends State<MyDrawer> {
                               ],
                             ),
                             child: CircleAvatar(
-                              backgroundImage:
-                                  AssetImage('assets/images/shivam.jpg'),
                               backgroundColor: Colors.blue,
+                              child: Text(
+                                myName[0],
+                                style: TextStyle(
+                                    fontSize: 50.0,
+                                    fontWeight: FontWeight.w700),
+                              ),
                             ),
                           ),
                         ),

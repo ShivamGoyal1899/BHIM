@@ -33,6 +33,7 @@ class _VoicePayState extends State<VoicePay> {
 
   String myIntent;
   var myIntentConfidence;
+  String myAmountDetected;
 
   @override
   initState() {
@@ -56,11 +57,11 @@ class _VoicePayState extends State<VoicePay> {
 
   getIntent() async {
     print(
-        '----------------------------- Transcription --------------------------------\n' +
+        '\n\n\n\n\n----------------------------- Transcription --------------------------------\n' +
             transcription);
     print(
         '----------------------------------------------------------------------------\n\n');
-    String url = 'http://52.66.101.188:5005/model/parse';
+    String url = 'http://13.126.105.2:5005/model/parse';
     final headers = {'Content-Type': 'application/json'};
     Map<String, dynamic> body = {"text": transcription};
     String jsonBody = json.encode(body);
@@ -70,6 +71,10 @@ class _VoicePayState extends State<VoicePay> {
 //    print(response.headers);
 //    print(response.statusCode);
 //    print(response.body);
+//    IntentApi parsedResponse = IntentApi.fromJson(json.decode(response.body));
+//    myIntent = parsedResponse.intent.name;
+//    myIntentConfidence = parsedResponse.intent.confidence;
+//    myAmountDetected = parsedResponse.entities[0].value ?? "NULL";
     myIntent = response.body.split('"')[5];
     myIntentConfidence = response.body
         .split('"')[8]
@@ -82,26 +87,31 @@ class _VoicePayState extends State<VoicePay> {
     print(
         '----------------------------------------------------------------------------\n\n');
     print(
-        "--------------------------- Intent Conficence ------------------------------\n" +
+        "--------------------------- Intent Confidence ------------------------------\n" +
             myIntentConfidence);
+//    print(
+//        '----------------------------------------------------------------------------\n\n');
+//    print(
+//        "---------------------------- Amount Detected -------------------------------\n" +
+//            myAmountDetected);
     print(
         '----------------------------------------------------------------------------\n\n\n\n\n');
     navigate();
   }
 
   navigate() {
-    if (double.parse(myIntentConfidence) >= 0.75) {
-      if (myIntent == 'account.balance.check') {
+    if (double.parse(myIntentConfidence) >= 0.80) {
+      if (myIntent == 'check_balance') {
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
           return PaymentMethodScreen();
         }));
-      } else if (myIntent == 'account.transactions.check') {
+      } else if (myIntent == 'check_transfer_history') {
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
           return TransactionHistoryScreen();
         }));
-      } else if (myIntent == 'account.rewards.check') {
+      } else if (myIntent == 'check_rewards') {
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
           return RewardzScreen();
@@ -109,7 +119,7 @@ class _VoicePayState extends State<VoicePay> {
       } else if (transcription.contains('scan')) {
         Navigator.of(context).pop();
         scan();
-      } else if (myIntent == 'transfer.money.send') {
+      } else if (myIntent == 'send_money') {
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
           return SendScreen();
@@ -119,7 +129,7 @@ class _VoicePayState extends State<VoicePay> {
             .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
           return QRFullScreen();
         }));
-      } else if (myIntent == 'transfer.money.request') {
+      } else if (myIntent == 'request_money') {
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
           return RequestScreen();
@@ -369,12 +379,13 @@ class _VoicePayState extends State<VoicePay> {
     setState(() => transcription = text);
   }
 
-  void onRecognitionComplete() {
+  void onRecognitionComplete() async {
     setState(() {
       return _isListening = false;
     });
-//    getIntent();
-    navigateHard();
+    await Future.delayed(const Duration(seconds: 2));
+    getIntent();
+//    navigateHard();
   }
 
   void errorHandler() => activateSpeechRecognizer();

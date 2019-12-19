@@ -36,7 +36,7 @@ class _SecurityDashBoardState extends State<SecurityDashBoard> {
                   borderRadius: BorderRadius.circular(25.0)),
               elevation: 4.0,
               onPressed: () {
-                sendMoneyTransaction();
+                sendMoneyTransaction('Dummy Name', '9999999999', '9999');
               },
               child: Container(
                 alignment: Alignment.center,

@@ -47,7 +47,8 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
           ),
           ListTile(
             title: Text("Account information"),
-            subtitle: Text(myName + ' • ' + myMobileNumber.replaceAll('+91', '')),
+            subtitle:
+                Text(myName + ' • ' + myMobileNumber.replaceAll('+91', '')),
             onTap: () {},
           ),
           ListTile(

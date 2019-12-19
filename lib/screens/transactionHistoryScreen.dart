@@ -71,7 +71,9 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
                                     ' • ' +
                                     listDecryptedTransaction[index]
                                         .split(',')[8]
-                                        .split(' ')[1],
+                                        .split(' ')[1]
+                                        .split('.')[0] +
+                                    ' hrs',
                                 style: TextStyle(fontSize: 12.0),
                               ),
                               Text(
@@ -125,7 +127,9 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
                                     ' • ' +
                                     listDecryptedTransaction[index]
                                         .split(',')[8]
-                                        .split(' ')[1],
+                                        .split(' ')[1]
+                                        .split('.')[0] +
+                                    ' hrs',
                                 style: TextStyle(fontSize: 12.0),
                               ),
                               Text(

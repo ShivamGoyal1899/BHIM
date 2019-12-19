@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "627470249948",
+    "firebase_url": "https://npci-database.firebaseio.com",
+    "project_id": "npci-database",
+    "storage_bucket": "npci-database.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627470249948:android:6d3b302cdedc3112bce919",
+        "android_client_info": {
+          "package_name": "co.shivamgoyal.upi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "627470249948-029adgfenu4u0nsaulrbqlci9u206ut1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.shivamgoyal.upi",
+            "certificate_hash": "2895557b43228ec2a0650d18f9d5d60b71545129"
+          }
+        },
+        {
+          "client_id": "627470249948-ufcc3qasius2chh91olrbkrok7igmgnv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB20hcicMLZSEHynaoqn5kIm6o0loSbsOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "627470249948-ufcc3qasius2chh91olrbkrok7igmgnv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -126,7 +126,6 @@ class _RequestScreenState extends State<RequestScreen> {
                       child: ListTile(
                         leading: CircleAvatar(
                           radius: 25.0,
-//                        backgroundImage: AssetImage('assets/images/shivam.jpg'),
                           backgroundColor: Colors.blue,
                           child: Text(
                             _contact.toString()[0],
@@ -148,7 +147,15 @@ class _RequestScreenState extends State<RequestScreen> {
                     borderRadius: BorderRadius.circular(25.0)),
                 elevation: 4.0,
                 onPressed: () async {
-                  requestMoneyTransaction();
+                  requestMoneyTransaction(
+                    _contact.toString().split(':')[0],
+                    _contact
+                        .toString()
+                        .split(':')[1]
+                        .replaceAll('+91', ' ')
+                        .replaceAll(new RegExp(r'\s+\b|\b\s'), ''),
+                    amountController.text,
+                  );
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {

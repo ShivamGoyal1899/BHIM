@@ -8,6 +8,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//        classpath 'com.google.gms:google-services:4.2.0'
     }
 }
 
@@ -18,6 +19,8 @@ allprojects {
     }
     configurations.all {
         resolutionStrategy.force "androidx.core:core:1.1.0"
+        resolutionStrategy.force "androidx.vectordrawable:vectordrawable:1.0.1"
+        resolutionStrategy.force "androidx.appcompat:appcompat:1.0.2"
     }
 }
 

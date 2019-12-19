@@ -1,3 +1,4 @@
+import 'package:BHIM/screens/RegistrationScreens/registrationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -5,7 +6,6 @@ import 'package:qr_flutter/qr_flutter.dart';
 import '../components/appBar.dart';
 import '../global.dart';
 import '../security/securityDashboard.dart';
-import 'deviceInfoScreen.dart';
 import 'languageScreen.dart';
 import 'notificationsScreen.dart';
 import 'paymentMethodsScreen.dart';
@@ -86,7 +86,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ListTile(
             leading: IconButton(icon: Icon(Icons.phone)),
             title: Text("Mobile number"),
-            subtitle: Text('+91 90122 18994'),
+            subtitle: Text(myMobileNumber),
           ),
           ListTile(
             leading: IconButton(icon: Icon(Icons.backup)),
@@ -220,7 +220,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             leading: IconButton(icon: Icon(Icons.power_settings_new)),
             title: Text("Deregister"),
             subtitle: Text('Clear BHIM UPI profile on this device'),
-            onTap: () {},
+            onTap: () {
+              deregisterUser();
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (BuildContext context) {
+                return RegistrationScreen();
+              }));
+            },
           ),
           Divider(
             height: 0.0,
@@ -267,25 +273,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ListTile(
             title: Text('DEV FEATURES',
                 style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16.0)),
-          ),
-          ListTile(
-            leading: IconButton(icon: Icon(Icons.perm_device_information)),
-            title: Text("Device Info"),
-            subtitle: Text('View handset information'),
-            trailing: IconButton(
-              icon: Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.black,
-                size: 16.0,
-              ),
-              onPressed: null,
-            ),
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (BuildContext context) {
-                return DeviceInfoScreen();
-              }));
-            },
           ),
           ListTile(
             leading: IconButton(icon: Icon(FontAwesomeIcons.qrcode)),

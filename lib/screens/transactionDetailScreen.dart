@@ -126,11 +126,14 @@ class TransactionDetailScreen extends StatelessWidget {
                     : listDecryptedTransaction[index].split(',')[9] == 'failed'
                         ? 'Transaction failed'
                         : 'Transaction pending'),
-            subtitle: Text(listDecryptedTransaction[index]
-                    .split(',')[8]
-                    .split(' ')[0] +
-                ' • ' +
-                listDecryptedTransaction[index].split(',')[8].split(' ')[1]),
+            subtitle: Text(
+                listDecryptedTransaction[index].split(',')[8].split(' ')[0] +
+                    ' • ' +
+                    listDecryptedTransaction[index]
+                        .split(',')[8]
+                        .split(' ')[1]
+                        .split('.')[0] +
+                    ' hrs'),
           ),
           Divider(
             height: 0.0,

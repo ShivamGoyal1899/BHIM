@@ -147,7 +147,15 @@ class _SendScreenState extends State<SendScreen> {
                     borderRadius: BorderRadius.circular(25.0)),
                 elevation: 4.0,
                 onPressed: () async {
-                  sendMoneyTransaction();
+                  sendMoneyTransaction(
+                    _contact.toString().split(':')[0],
+                    _contact
+                        .toString()
+                        .split(':')[1]
+                        .replaceAll('+91', ' ')
+                        .replaceAll(new RegExp(r'\s+\b|\b\s'), ''),
+                    amountController.text,
+                  );
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
