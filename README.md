@@ -23,8 +23,8 @@ The source code is **100% Dart**, and everything resides in the [/lib](https://g
 ## Tech Stack
 * Flutter
 * InHouse Blockchain Database
+* InHosue Voice Recognition API
 * InHouse Intent Recognition API
-* Google Voice Recognition API
 * Infinit UPI Platform
 
 ## API Hosting
