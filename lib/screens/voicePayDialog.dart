@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import '../models/intentApiModel.dart';
+import 'paymentDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:recase/recase.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 
 import '../global.dart';
@@ -9,10 +12,9 @@ import '../models/languageModel.dart';
 import 'languageScreen.dart';
 import 'paymentMethodScreen.dart';
 import 'paymentMethodsScreen.dart';
+import 'paymentScreen.dart';
 import 'qrFullScreen.dart';
-import 'requestScreen.dart';
 import 'rewardzScreen.dart';
-import 'sendScreen.dart';
 import 'settingsScreen.dart';
 import 'transactionHistoryScreen.dart';
 import 'ussdServiceScreen.dart';
@@ -33,7 +35,8 @@ class _VoicePayState extends State<VoicePay> {
 
   String myIntent;
   var myIntentConfidence;
-  String myAmountDetected;
+  String myAmountDetected = 'NULL';
+  String myPerson = 'NULL';
 
   @override
   initState() {
@@ -61,46 +64,53 @@ class _VoicePayState extends State<VoicePay> {
             transcription);
     print(
         '----------------------------------------------------------------------------\n\n');
-    String url = 'http://13.126.105.2:5005/model/parse';
+    String url = 'http://3.83.153.83:5005/model/parse';
     final headers = {'Content-Type': 'application/json'};
     Map<String, dynamic> body = {"text": transcription};
     String jsonBody = json.encode(body);
     final encoding = Encoding.getByName('utf-8');
     http.Response response = await http.post(url,
         headers: headers, body: jsonBody, encoding: encoding);
-//    print(response.headers);
-//    print(response.statusCode);
-//    print(response.body);
-//    IntentApi parsedResponse = IntentApi.fromJson(json.decode(response.body));
-//    myIntent = parsedResponse.intent.name;
-//    myIntentConfidence = parsedResponse.intent.confidence;
-//    myAmountDetected = parsedResponse.entities[0].value ?? "NULL";
-    myIntent = response.body.split('"')[5];
-    myIntentConfidence = response.body
-        .split('"')[8]
-        .replaceAll(',', '')
-        .replaceAll('}', '')
-        .replaceAll(':', '');
+    IntentApi parsedResponse = IntentApi.fromJson(json.decode(response.body));
+    myIntent = parsedResponse.intent.name;
+    myIntentConfidence = parsedResponse.intent.confidence.toString();
+    if (parsedResponse.entities.length == 2) {
+      if (parsedResponse.entities[0].entity == 'amount') {
+        myAmountDetected = parsedResponse.entities[0].value;
+      } else if (parsedResponse.entities[1].entity == 'amount') {
+        myAmountDetected = parsedResponse.entities[1].value;
+      }
+      if (parsedResponse.entities[0].entity == 'name') {
+        myPerson = ReCase(parsedResponse.entities[0].value).titleCase;
+      } else if (parsedResponse.entities[1].entity == 'name') {
+        myPerson = ReCase(parsedResponse.entities[1].value).titleCase;
+      }
+    }
     print(
-        "---------------------------- Intent Detected -------------------------------\n" +
+        '---------------------------- Intent Detected -------------------------------\n' +
             myIntent);
     print(
         '----------------------------------------------------------------------------\n\n');
     print(
-        "--------------------------- Intent Confidence ------------------------------\n" +
+        '--------------------------- Intent Confidence ------------------------------\n' +
             myIntentConfidence);
-//    print(
-//        '----------------------------------------------------------------------------\n\n');
-//    print(
-//        "---------------------------- Amount Detected -------------------------------\n" +
-//            myAmountDetected);
+    print(
+        '----------------------------------------------------------------------------\n\n');
+    print(
+        '---------------------------- Amount Detected -------------------------------\n' +
+            myAmountDetected);
+    print(
+        '----------------------------------------------------------------------------\n\n');
+    print(
+        '---------------------------- Person Detected -------------------------------\n' +
+            myPerson);
     print(
         '----------------------------------------------------------------------------\n\n\n\n\n');
     navigate();
   }
 
   navigate() {
-    if (double.parse(myIntentConfidence) >= 0.80) {
+    if (double.parse(myIntentConfidence) >= 0.6) {
       if (myIntent == 'check_balance') {
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
@@ -119,20 +129,28 @@ class _VoicePayState extends State<VoicePay> {
       } else if (transcription.contains('scan')) {
         Navigator.of(context).pop();
         scan();
-      } else if (myIntent == 'send_money') {
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-          return SendScreen();
-        }));
+      } else if (myIntent == 'send_money' || myIntent == 'request_money') {
+        if (myAmountDetected != 'NULL' && myPerson != 'NULL') {
+          Navigator.of(context).pop();
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return PaymentDialog(
+                  intent: myIntent, person: myPerson, amount: myAmountDetected);
+            },
+          );
+        } else {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (BuildContext context) {
+            return PaymentScreen(
+              intent: myIntent,
+            );
+          }));
+        }
       } else if (transcription.contains('receive')) {
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
           return QRFullScreen();
-        }));
-      } else if (myIntent == 'request_money') {
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-          return RequestScreen();
         }));
       } else if (transcription.contains('accounts')) {
         Navigator.of(context)
@@ -165,73 +183,6 @@ class _VoicePayState extends State<VoicePay> {
           return SettingsScreen();
         }));
       }
-    }
-  }
-
-  navigateHard() {
-    if (transcription.contains('balance')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return PaymentMethodScreen();
-      }));
-    } else if (transcription.contains('history')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return TransactionHistoryScreen();
-      }));
-    } else if (transcription.contains('rewards')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return RewardzScreen();
-      }));
-    } else if (transcription.contains('scan')) {
-      Navigator.of(context).pop();
-      scan();
-    } else if (transcription.contains('send')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return SendScreen();
-      }));
-    } else if (transcription.contains('receive')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return QRFullScreen();
-      }));
-    } else if (transcription.contains('request')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return RequestScreen();
-      }));
-    } else if (transcription.contains('accounts')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return PaymentMethodsScreen();
-      }));
-    } else if (transcription.contains('language')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return LanguageScreen();
-      }));
-    } else if (transcription.contains('USSD')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return USSDServiceScreen();
-      }));
-    } else if (transcription.contains('logout')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return TransactionHistoryScreen();
-      }));
-    } else if (transcription.contains('feedback')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return TransactionHistoryScreen();
-      }));
-    } else if (transcription.contains('settings')) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return SettingsScreen();
-      }));
     }
   }
 
@@ -289,11 +240,6 @@ class _VoicePayState extends State<VoicePay> {
                     ? () => start()
                     : null,
               ),
-//              PopupMenuButton<Language>(
-//                icon: Icon(Icons.translate),
-//                onSelected: _selectLangHandler,
-//                itemBuilder: (BuildContext context) => _buildLanguagesWidgets,
-//              ),
               IconButton(
                 icon: Icon(Icons.translate),
                 onPressed: () {
@@ -383,9 +329,8 @@ class _VoicePayState extends State<VoicePay> {
     setState(() {
       return _isListening = false;
     });
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 2));
     getIntent();
-//    navigateHard();
   }
 
   void errorHandler() => activateSpeechRecognizer();

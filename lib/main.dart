@@ -16,7 +16,6 @@ class BHIMApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'BHIM',
       theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Quicksand'),
-//      home: registrationStatus == 'Registered' ? LoginScreen() : RegistrationScreen(),
       home: LoginVerificationScreen(),
     );
   }

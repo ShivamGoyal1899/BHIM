@@ -1,4 +1,6 @@
+import 'package:BHIM/components/inputField.dart';
 import 'package:BHIM/screens/loginVerificationScreen.dart';
+import 'package:BHIM/screens/voiceRegistrationDialog.dart';
 import 'package:flutter/material.dart';
 
 import '../../global.dart';
@@ -25,132 +27,56 @@ class _RegisterState extends State<Register> {
           padding:
               EdgeInsets.only(top: MediaQuery.of(context).size.height / 3.5),
         ),
-        Padding(
-          padding: EdgeInsets.only(right: 40, bottom: 20),
-          child: Container(
-            width: MediaQuery.of(context).size.width - 40,
-            child: Material(
-              elevation: 8,
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.only(topRight: Radius.circular(30.0))),
-              child: Padding(
-                padding:
-                    EdgeInsets.only(left: 40, right: 20, top: 5, bottom: 5),
-                child: TextField(
-                  controller: nameController,
-                  keyboardType: TextInputType.text,
-                  textCapitalization: TextCapitalization.words,
-                  focusNode: nameFocusNode,
-                  autofocus: false,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Name",
-                      hintStyle:
-                          TextStyle(color: Color(0xFFE1E1E1), fontSize: 14)),
-                ),
-              ),
-            ),
-          ),
+        InputField(
+          hintText: 'Full Name',
+          keyboardType: TextInputType.text,
+          textCapitalization: TextCapitalization.words,
+          controller: nameController,
+          focusNode: nameFocusNode,
         ),
-        Padding(
-          padding: EdgeInsets.only(right: 40, bottom: 20),
-          child: Container(
-            width: MediaQuery.of(context).size.width - 40,
-            child: Material(
-              elevation: 8,
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.only(topRight: Radius.circular(30.0))),
-              child: Padding(
-                padding:
-                    EdgeInsets.only(left: 40, right: 20, top: 5, bottom: 5),
-                child: TextField(
-                  controller: mobileNumberController,
-                  keyboardType: TextInputType.number,
-                  textCapitalization: TextCapitalization.none,
-                  focusNode: mobileNumberFocusNode,
-                  autofocus: false,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Mobile Number",
-                      hintStyle:
-                          TextStyle(color: Color(0xFFE1E1E1), fontSize: 14)),
-                ),
-              ),
-            ),
-          ),
+        InputField(
+          hintText: 'Mobile Number',
+          keyboardType: TextInputType.number,
+          textCapitalization: TextCapitalization.none,
+          controller: mobileNumberController,
+          focusNode: mobileNumberFocusNode,
         ),
-        Padding(
-          padding: EdgeInsets.only(right: 40, bottom: 20),
-          child: Container(
-            width: MediaQuery.of(context).size.width - 40,
-            child: Material(
-              elevation: 8,
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.only(topRight: Radius.circular(30.0))),
-              child: Padding(
-                padding:
-                    EdgeInsets.only(left: 40, right: 20, top: 5, bottom: 5),
-                child: TextField(
-                  controller: upiIDcontroller,
-                  keyboardType: TextInputType.emailAddress,
-                  textCapitalization: TextCapitalization.none,
-                  focusNode: upiIDFocusNode,
-                  autofocus: false,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "UPI ID",
-                      hintStyle:
-                          TextStyle(color: Color(0xFFE1E1E1), fontSize: 14)),
-                ),
-              ),
-            ),
-          ),
+        InputField(
+          hintText: 'UPI ID',
+          keyboardType: TextInputType.emailAddress,
+          textCapitalization: TextCapitalization.none,
+          controller: upiIDcontroller,
+          focusNode: upiIDFocusNode,
         ),
         SizedBox(height: 20.0),
-        Container(
-          alignment: Alignment.center,
-          child: Text(
-            "Voice Registration",
-            style: TextStyle(
-              fontSize: 28,
-              color: Color(0xFF999A9A),
-              fontWeight: FontWeight.w500,
+        Center(
+          child: GestureDetector(
+            child: Container(
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width / 1.7,
+              decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0)),
+                gradient: LinearGradient(
+                    colors: blueGradient,
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight),
+              ),
+              child: Text("Enable Voice Payments",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500)),
+              padding: EdgeInsets.only(top: 16, bottom: 16),
             ),
-          ),
-        ),
-        SizedBox(height: 10.0),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              IconButton(
-                icon: Icon(
-                  Icons.mic,
-                  color: Colors.green,
-                  size: 30.0,
-                ),
-              ),
-              SizedBox(width: 10.0),
-              IconButton(
-                icon: Icon(
-                  Icons.radio_button_checked,
-                  size: 30.0,
-                ),
-              ),
-              SizedBox(width: 10.0),
-              IconButton(
-                icon: Icon(
-                  Icons.radio_button_unchecked,
-                  size: 30.0,
-                ),
-              )
-            ],
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return VoiceRegistrationDialog();
+                },
+              );
+            },
           ),
         ),
         SizedBox(height: 20.0),
@@ -163,7 +89,7 @@ class _RegisterState extends State<Register> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0)),
                 gradient: LinearGradient(
-                    colors: signUpGradients,
+                    colors: orangeGradient,
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight),
               ),
@@ -191,13 +117,3 @@ class _RegisterState extends State<Register> {
     );
   }
 }
-
-const List<Color> signInGradients = [
-  Color(0xFF0EDED2),
-  Color(0xFF03A0FE),
-];
-
-const List<Color> signUpGradients = [
-  Color(0xFFFF9945),
-  Color(0xFFFc6076),
-];

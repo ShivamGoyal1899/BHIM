@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
@@ -158,7 +160,6 @@ Future getAllTransactions() async {
       listDecryptedTransaction.add(toBeAddedTransaction);
     }
   }
-//  listDecryptedTransaction = listEncryptedTransaction.reversed.toList();
   print(
       '----------------------------------------------------------------------------\n');
   print(
@@ -260,3 +261,13 @@ void deregisterUser() async {
   prefs.setString(registrationStatusKey, registrationStatus);
   print(registrationStatus);
 }
+
+const List<Color> blueGradient = [
+  Color(0xFF0EDED2),
+  Color(0xFF03A0FE),
+];
+
+const List<Color> orangeGradient = [
+  Color(0xFFFF9945),
+  Color(0xFFFc6076),
+];

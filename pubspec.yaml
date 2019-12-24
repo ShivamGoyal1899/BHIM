@@ -1,6 +1,6 @@
 name: BHIM
 description: Voice Based BHIM UPI Payments App
-version: 0.9.0+1
+version: 0.9.9
 repository: https://github.com/ShivamGoyal1899/BHIM
 authors:
   - Shivam Goyal
@@ -13,7 +13,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  url_launcher: ^5.4.1
+  url_launcher: ^5.2.7
   font_awesome_flutter: ^8.5.0
   barcode_scan: ^1.0.0
   qr_flutter: ^3.1.0
@@ -26,7 +26,8 @@ dependencies:
   native_contact_picker: ^0.0.6
   simple_rsa: ^0.0.5
   random_string: ^2.0.0
-  shared_preferences: ^0.5.6
+  shared_preferences: ^0.5.4
+  recase: ^2.0.1
 
 dev_dependencies:
   flutter_test:

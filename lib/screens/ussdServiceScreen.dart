@@ -25,11 +25,11 @@ class _USSDServiceScreenState extends State<USSDServiceScreen> {
         children: <Widget>[
           ListTile(
             subtitle: Text(
-                "Using *99# service, a user can access financial services by dialing *99# frim his/her mobile registered with the bank."),
+                'Using *99# service, a user can access financial services by dialing *99# frim his/her mobile registered with the bank.'),
             onTap: () {},
           ),
           ListTile(
-            title: Text("Toggle USSD Service"),
+            title: Text('Toggle USSD Service'),
             trailing: IconButton(
               icon: Icon(
                 Icons.check,

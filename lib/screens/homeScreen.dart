@@ -1,6 +1,5 @@
 import 'package:BHIM/screens/background.dart';
-import 'package:BHIM/screens/requestScreen.dart';
-import 'package:BHIM/screens/sendScreen.dart';
+import 'package:BHIM/screens/paymentScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../global.dart';
@@ -72,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () {
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (BuildContext context) {
-                          return SendScreen();
+                          return PaymentScreen(intent: 'send_money');
                         }));
                       }),
                   GestureDetector(
@@ -94,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       Navigator.of(context).push(
                           MaterialPageRoute(builder: (BuildContext context) {
-                        return RequestScreen();
+                        return PaymentScreen(intent: 'request_money');
                       }));
                     },
                   ),
