@@ -68,7 +68,7 @@ class _VoiceRegistrationDialogState extends State<VoiceRegistrationDialog> {
                 },
                 child: IconButton(
                   icon: status1
-                      ? Icon(Icons.mic, color: Colors.green)
+                      ? Icon(Icons.check_circle, color: Colors.green)
                       : Icon(Icons.mic_none),
                   onPressed: () {},
                 ),
@@ -96,7 +96,7 @@ class _VoiceRegistrationDialogState extends State<VoiceRegistrationDialog> {
                 },
                 child: IconButton(
                   icon: status2
-                      ? Icon(Icons.mic, color: Colors.green)
+                      ? Icon(Icons.check_circle, color: Colors.green)
                       : Icon(Icons.mic_none),
                   onPressed: () {},
                 ),
@@ -181,7 +181,7 @@ class _VoiceRegistrationDialogState extends State<VoiceRegistrationDialog> {
                 },
                 child: IconButton(
                   icon: status3
-                      ? Icon(Icons.mic, color: Colors.green)
+                      ? Icon(Icons.check_circle, color: Colors.green)
                       : Icon(Icons.mic_none),
                   onPressed: () {},
                 ),
