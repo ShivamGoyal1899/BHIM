@@ -1,15 +1,16 @@
 import 'dart:convert';
 
-import '../models/intentApiModel.dart';
-import 'paymentDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:recase/recase.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 
 import '../global.dart';
+import '../models/intentApiModel.dart';
 import '../models/languageModel.dart';
+import 'RegistrationScreens/registrationScreen.dart';
 import 'languageScreen.dart';
+import 'paymentDialog.dart';
 import 'paymentMethodScreen.dart';
 import 'paymentMethodsScreen.dart';
 import 'paymentScreen.dart';
@@ -126,9 +127,6 @@ class _VoicePayState extends State<VoicePay> {
             .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
           return RewardzScreen();
         }));
-      } else if (transcription.contains('scan')) {
-        Navigator.of(context).pop();
-        scan();
       } else if (myIntent == 'send_money' || myIntent == 'request_money') {
         if (myAmountDetected != 'NULL' && myPerson != 'NULL') {
           Navigator.of(context).pop();
@@ -147,42 +145,40 @@ class _VoicePayState extends State<VoicePay> {
             );
           }));
         }
-      } else if (transcription.contains('receive')) {
+      } else if (myIntent == 'scan') {
+        scan();
+      } else if (myIntent == 'receive_money') {
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
           return QRFullScreen();
         }));
-      } else if (transcription.contains('accounts')) {
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-          return PaymentMethodsScreen();
-        }));
-      } else if (transcription.contains('language')) {
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-          return LanguageScreen();
-        }));
-      } else if (transcription.contains('USSD')) {
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-          return USSDServiceScreen();
-        }));
-      } else if (transcription.contains('logout')) {
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-          return TransactionHistoryScreen();
-        }));
-      } else if (transcription.contains('feedback')) {
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-          return TransactionHistoryScreen();
-        }));
-      } else if (transcription.contains('settings')) {
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-          return SettingsScreen();
-        }));
       }
+    } else if (transcription.contains('accounts')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return PaymentMethodsScreen();
+      }));
+    } else if (transcription.contains('language')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return LanguageScreen();
+      }));
+    } else if (transcription.contains('USSD')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return USSDServiceScreen();
+      }));
+    } else if (transcription.contains('deregister')) {
+      deregisterUser();
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return RegistrationScreen();
+      }));
+    } else if (transcription.contains('settings')) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return SettingsScreen();
+      }));
     }
   }
 
