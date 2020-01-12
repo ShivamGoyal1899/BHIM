@@ -1,6 +1,5 @@
 import 'package:BHIM/screens/DrawerScreens/navigationHomeScreen.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/cupertino.dart' as prefix0;
 import 'package:flutter/material.dart';
 import 'package:recase/recase.dart';
 
@@ -12,6 +11,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  bool allowLogin = true;
+  MaterialColor myColor = Colors.green;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,12 +21,31 @@ class _LoginState extends State<Login> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Text("Hi " + ReCase(myName).titleCase.split(' ')[0] + ' !',
-            style: TextStyle(
-                color: Color(0xFF999A9A),
-                fontSize: 32,
-                fontWeight: FontWeight.w700)),
-        SizedBox(height: 20.0),
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              if (myColor == Colors.green) {
+                allowLogin = false;
+                myColor = Colors.red;
+              } else {
+                allowLogin = true;
+                myColor = Colors.green;
+              }
+            });
+          },
+          child: Text("Hi " + ReCase(myName).titleCase.split(' ')[0] + ' !',
+              style: TextStyle(
+                  color: Color(0xFF999A9A),
+                  fontSize: 32,
+                  fontWeight: FontWeight.w700)),
+        ),
+        Text(
+          '-',
+          style: TextStyle(
+              color: myColor, fontSize: 22, fontWeight: FontWeight.w500),
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(height: 5.0),
         Text(
           'Hold the button and speak the following sentence to confirm your identity.',
           style: TextStyle(
@@ -90,38 +111,63 @@ class _LoginState extends State<Login> {
               );
               await Future.delayed(Duration(seconds: 3));
               Navigator.of(context).pop();
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(25),
-                    ),
-                  ),
-                  content: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset(
-                        'assets/images/payment.gif',
-                        height: 50,
+              allowLogin
+                  ? showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(25),
+                          ),
+                        ),
+                        content: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Image.asset(
+                              'assets/images/payment.gif',
+                              height: 50,
+                            ),
+                            Text(
+                              'Verified !',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 25.0),
+                            ),
+                          ],
+                        ),
                       ),
-                      Text(
-                        'Verified !',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 25.0),
+                    )
+                  : showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(25),
+                          ),
+                        ),
+                        content: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Login Failed !',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 25.0),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              );
+                    );
               await Future.delayed(Duration(seconds: 2));
               Navigator.of(context).pop();
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (BuildContext context) {
-                return NavigationHomeScreen();
-              }));
+              allowLogin
+                  ? Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (BuildContext context) {
+                      return NavigationHomeScreen();
+                    }))
+                  : null;
             },
           ),
         ),

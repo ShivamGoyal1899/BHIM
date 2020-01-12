@@ -1,6 +1,6 @@
 import 'package:BHIM/components/inputField.dart';
-import 'package:BHIM/screens/loginVerificationScreen.dart';
 import 'package:BHIM/screens/RegistrationScreens/voiceRegistrationDialog.dart';
+import 'package:BHIM/screens/loginVerificationScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../global.dart';

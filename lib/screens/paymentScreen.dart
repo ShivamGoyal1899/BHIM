@@ -29,8 +29,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TopBar(
-        title: widget.intent == 'send_money'
-            ? 'Send Money' : 'Request Money',
+        title: widget.intent == 'send_money' ? 'Send Money' : 'Request Money',
         child: Icon(
           Icons.arrow_back_ios,
         ),
