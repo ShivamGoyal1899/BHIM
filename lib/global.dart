@@ -271,7 +271,3 @@ const List<Color> orangeGradient = [
   Color(0xFFFF9945),
   Color(0xFFFc6076),
 ];
-
-trainModel(
-  step,
-) {}

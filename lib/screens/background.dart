@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class Background extends StatelessWidget {
   final isImage;
+
   Background({Key key, this.title, this.isImage}) : super(key: key);
 
   final String title;

@@ -2,12 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:recase/recase.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 
 import '../global.dart';
 import '../models/intentApiModel.dart';
-import '../models/languageModel.dart';
 import 'RegistrationScreens/registrationScreen.dart';
 import 'languageScreen.dart';
 import 'paymentDialog.dart';
@@ -19,6 +17,21 @@ import 'rewardzScreen.dart';
 import 'settingsScreen.dart';
 import 'transactionHistoryScreen.dart';
 import 'ussdServiceScreen.dart';
+
+const languages = const [
+  const Language('English (India)', 'en'),
+  const Language('Hindi (हिंदी)', 'hi'),
+  const Language('Marathi (मराठी)', 'mr'),
+  const Language('Gujarati (ગુજરાતી)', 'gu'),
+  const Language('Kannada (ಕನ್ನಡ)', 'kn'),
+];
+
+class Language {
+  final String name;
+  final String code;
+
+  const Language(this.name, this.code);
+}
 
 class VoicePay extends StatefulWidget {
   @override
@@ -32,12 +45,12 @@ class _VoicePayState extends State<VoicePay> {
   bool _speechRecognitionAvailable = false;
   bool _isListening = false;
 
-  LanguageModel selectedLang = languageData[0];
-
   String myIntent;
   var myIntentConfidence;
   String myAmountDetected = 'NULL';
   String myPerson = 'NULL';
+
+  Language selectedLang = languages[0];
 
   @override
   initState() {
@@ -53,7 +66,6 @@ class _VoicePayState extends State<VoicePay> {
     _speech.setRecognitionStartedHandler(onRecognitionStarted);
     _speech.setRecognitionResultHandler(onRecognitionResult);
     _speech.setRecognitionCompleteHandler(onRecognitionComplete);
-//    _speech.setErrorHandler(errorHandler);
     _speech
         .activate()
         .then((res) => setState(() => _speechRecognitionAvailable = res));
@@ -65,28 +77,21 @@ class _VoicePayState extends State<VoicePay> {
             transcription);
     print(
         '----------------------------------------------------------------------------\n\n');
-    String url = 'http://3.83.153.83:5005/model/parse';
+    String url = 'http://3.83.153.83:5000/v1.0/nlp';
     final headers = {'Content-Type': 'application/json'};
-    Map<String, dynamic> body = {"text": transcription};
+    Map<String, dynamic> body = {
+      "language_code": selectedLang.code,
+      "text": transcription
+    };
     String jsonBody = json.encode(body);
     final encoding = Encoding.getByName('utf-8');
     http.Response response = await http.post(url,
         headers: headers, body: jsonBody, encoding: encoding);
     IntentApi parsedResponse = IntentApi.fromJson(json.decode(response.body));
-    myIntent = parsedResponse.intent.name;
-    myIntentConfidence = parsedResponse.intent.confidence.toString();
-    if (parsedResponse.entities.length == 2) {
-      if (parsedResponse.entities[0].entity == 'amount') {
-        myAmountDetected = parsedResponse.entities[0].value;
-      } else if (parsedResponse.entities[1].entity == 'amount') {
-        myAmountDetected = parsedResponse.entities[1].value;
-      }
-      if (parsedResponse.entities[0].entity == 'name') {
-        myPerson = ReCase(parsedResponse.entities[0].value).titleCase;
-      } else if (parsedResponse.entities[1].entity == 'name') {
-        myPerson = ReCase(parsedResponse.entities[1].value).titleCase;
-      }
-    }
+    myIntent = parsedResponse.intent;
+    myIntentConfidence = parsedResponse.confidence.toString();
+    myAmountDetected = parsedResponse.amount ?? 'NULL';
+    myPerson = parsedResponse.name ?? 'NULL';
     print(
         '---------------------------- Intent Detected -------------------------------\n' +
             myIntent);
@@ -111,7 +116,7 @@ class _VoicePayState extends State<VoicePay> {
   }
 
   navigate() {
-    if (double.parse(myIntentConfidence) >= 0.6) {
+    if (double.parse(myIntentConfidence) >= 0.7) {
       if (myIntent == 'check_balance') {
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
@@ -219,8 +224,114 @@ class _VoicePayState extends State<VoicePay> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               IconButton(
-                icon: Icon(Icons.keyboard),
-                onPressed: () {},
+                icon: Icon(
+                  Icons.help_outline,
+                  size: 25,
+                ),
+                onPressed: () => showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(25),
+                        ),
+                      ),
+                      title: Text(
+                        'VoicePay Help',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 25.0),
+                      ),
+                      content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              alignment: Alignment.center,
+                              height: 80.0,
+                              child: Text(
+                                'VoicePay allows the user to do financial transactions and navigate throurgh the BHIM App by making use of simple voice commands.',
+                                style: TextStyle(fontSize: 16.0),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            Divider(height: 20.0, color: Colors.grey),
+                            Container(
+                              alignment: Alignment.center,
+                              height: 20.0,
+                              child: Text(
+                                'Sample Commands',
+                                style: TextStyle(fontSize: 16.0),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            Divider(height: 20.0, color: Colors.grey),
+                            Container(
+                              alignment: Alignment.bottomCenter,
+                              height: 20.0,
+                              child: Text(
+                                'Send 500 Rupees to Mankaran Singh',
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 14.0,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.bottomCenter,
+                              height: 20.0,
+                              child: Text(
+                                'Show my Transaction History',
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 14.0,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.bottomCenter,
+                              height: 20.0,
+                              child: Text(
+                                'Request 250 Rupees from Utkarsh Mishra',
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 14.0,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.bottomCenter,
+                              height: 20.0,
+                              child: Text(
+                                'I want to change some Settings',
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 14.0,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.bottomCenter,
+                              height: 20.0,
+                              child: Text(
+                                'Show the Rewardz I have earned.',
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 14.0,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            )
+                          ]),
+                    );
+                  },
+                ),
               ),
               IconButton(
                 icon: !_speechRecognitionAvailable || _isListening
@@ -236,70 +347,69 @@ class _VoicePayState extends State<VoicePay> {
                     ? () => start()
                     : null,
               ),
-              IconButton(
+              PopupMenuButton<Language>(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(25),
+                  ),
+                ),
                 icon: Icon(Icons.translate),
-                onPressed: () {
-                  showModalBottomSheet<void>(
-                    context: context,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25),
-                      ),
-                    ),
-                    builder: (BuildContext context) {
-                      return Container(
-                        height: 350.0,
-                        child: ListView.builder(
-                          itemCount: languageData.length + 1,
-                          itemBuilder: (context, index) => index == 0
-                              ? Column(
-                                  children: <Widget>[
-                                    ListTile(
-                                      title: Text(
-                                        'Choose Language',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                    Divider(
-                                      height: 0.0,
-                                      color: Colors.black,
-                                    ),
-                                  ],
-                                )
-                              : ListTile(
-                                  title: Text(
-                                      languageData[index - 1].languageName),
-                                  trailing:
-                                      languageData[index - 1].languageCode ==
-                                              'en_IN'
-                                          ? IconButton(
-                                              icon: Icon(
-                                                Icons.check,
-                                                color: Colors.black,
-                                              ),
-                                              onPressed: null,
-                                            )
-                                          : null),
-                        ),
-                      );
-                    },
-                  );
+                onSelected: (lang) {
+                  setState(() => selectedLang = lang);
                 },
+                itemBuilder: (BuildContext context) => _buildLanguagesWidgets,
+                color: Colors.white,
+                elevation: 8.0,
+                initialValue: selectedLang,
+                offset: Offset.zero,
+                enabled: true,
               ),
             ],
           ),
+          Divider(height: 20.0, color: Colors.grey),
+          Container(
+            alignment: Alignment.bottomCenter,
+            height: 20.0,
+            child: Text(
+              'Send 500 Rupees to Mankaran Singh',
+              style: TextStyle(
+                fontStyle: FontStyle.italic,
+                fontSize: 14.0,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+          Container(
+            alignment: Alignment.bottomCenter,
+            height: 20.0,
+            child: Text(
+              'Show my Transaction History',
+              style: TextStyle(
+                fontStyle: FontStyle.italic,
+                fontSize: 14.0,
+                color: Colors.grey,
+              ),
+            ),
+          )
         ],
       ),
     );
   }
 
-  void start() => _speech.listen(locale: selectedLang.languageCode);
+  List<PopupMenuItem<Language>> get _buildLanguagesWidgets => languages
+      .map((l) => PopupMenuItem<Language>(
+            value: l,
+            child: Text(l.name),
+          ))
+      .toList();
 
-//      .then((result) => print('_MyAppState.start => result $result'));
+  void _selectLangHandler(lang) {
+    setState(() => selectedLang = lang);
+  }
+
+  void start() => _speech
+      .listen(locale: 'en_IN')
+      .then((result) => print('_MyAppState.start => result $result'));
 
   void cancel() =>
       _speech.cancel().then((result) => setState(() => _isListening = result));
@@ -312,7 +422,7 @@ class _VoicePayState extends State<VoicePay> {
       setState(() => _speechRecognitionAvailable = result);
 
   void onCurrentLocale(String locale) {
-//    print('_MyAppState.onCurrentLocale... $locale');
+    print('_MyAppState.onCurrentLocale... $locale');
   }
 
   void onRecognitionStarted() => setState(() => _isListening = true);

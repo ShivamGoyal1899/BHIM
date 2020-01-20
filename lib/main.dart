@@ -1,4 +1,4 @@
-import 'package:BHIM/screens/loginVerificationScreen.dart';
+import 'package:BHIM/screens/LoginScreens/loginVerificationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

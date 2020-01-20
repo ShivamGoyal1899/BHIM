@@ -3,7 +3,7 @@ import 'package:BHIM/screens/RegistrationScreens/registrationScreen.dart';
 import 'package:BHIM/screens/background.dart';
 import 'package:flutter/material.dart';
 
-import '../global.dart';
+import '../../global.dart';
 
 class LoginVerificationScreen extends StatefulWidget {
   @override
