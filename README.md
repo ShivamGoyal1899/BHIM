@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/ShivamGoyal1899/BHIM">
-    <img alt="EcoJourney" src="./readme/BHIM - 3000x1000.png" width="100%" />
+    <img alt="BHIM" src="./readme/BHIM - 3000x1000.png" width="100%" />
   </a>
 </p>
 <p align="center">
@@ -91,7 +91,7 @@ At this point, you’ve got the fully functional BHIM App running. For additiona
 I've used [Semantic Versioning 2.0.0](https://semver.org/) for versioning throughout the project.
 
 ## :question: Queries / Bugs
-If you got any queries or found a bug, open an [Issue](https://github.com/ShivamGoyal1899/EcoJourney/issues/new) or ping me over on [hi@itsshivam.com](mailto:hi@itsshivam.com)
+If you got any queries or found a bug, open an [Issue](https://github.com/ShivamGoyal1899/BHIM/issues/new) or ping me over on [hi@itsshivam.com](mailto:hi@itsshivam.com)
 
 ## :memo: License
 Licensed under the [MIT License](./LICENSE).
