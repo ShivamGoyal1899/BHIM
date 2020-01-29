@@ -1,107 +1,101 @@
-## BHIM
-This is the code repository of the Voice-Based BHIM Android App. Bharat Interface for Money (BHIM) is a payment app that lets you make simple, easy and quick transactions using Unified Payments Interface (UPI). This app is designed & developed by Team AeroCoders in NPCI Voice-Based Payments Hackathon held on 14th December 2019 in Mumbai, India.
+<p align="center">
+  <a href="https://github.com/ShivamGoyal1899/BHIM">
+    <img alt="EcoJourney" src="./readme/BHIM - 3000x1000.png" width="100%" />
+  </a>
+</p>
+<p align="center">
+  Bharat Interface for Money (BHIM) is a payment app that lets you make simple, easy and quick transactions using Unified Payments Interface (UPI). I've built a Voice Module that is lightweight in size and can be integrated into the existing BHIM App.
+</p>
+<p align="center">
+  <a href="https://github.com/ShivamGoyal1899/BHIM/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/ShivamGoyal1899/BHIM?style=for-the-badge" alt="BHIM is released under the MIT license." />
+  </a>
+  <a href="https://github.com/ShivamGoyal1899/BHIM/releases">
+    <img src="https://img.shields.io/github/v/release/ShivamGoyal1899/BHIM?style=for-the-badge" alt="Latest Version Available." />
+  </a>
+  <a href="https://github.com/ShivamGoyal1899/BHIM/archive/master.zip">
+    <img src="https://img.shields.io/github/repo-size/ShivamGoyal1899/BHIM?style=for-the-badge" alt="GitHub Repository size." />
+  </a>
+  <a href="https://github.com/ShivamGoyal1899/BHIM/releases">
+    <img src="https://img.shields.io/github/downloads/ShivamGoyal1899/BHIM/total?style=for-the-badge" alt="Total downloads on GitHub." />
+  </a>
+  <a href="https://paypal.me/shivamgoyal1899">
+    <img src="https://img.shields.io/badge/Sponsor-Paypal-informational?style=for-the-badge&logo=paypal" alt="Sponsor on PayPal." />
+  </a>
+</p>
+<p align="center">
+Show some love 💜 and Star ⭐️ the Repository to support the project.
+</p>
 
-The source code is **100% Dart**, and everything resides in the [/lib](https://github.com/ShivamGoyal1899/BHIM/tree/master/lib) folder.
+|                 Registration Screen               |                 Voice Registration                |                    Voice Login                    |
+|:-------------------------------------------------:|:-------------------------------------------------:|:-------------------------------------------------:|
+| <img width="1604" src="./readme/screenshot1.jpg"> | <img width="1604" src="./readme/screenshot2.jpg"> | <img width="1604" src="./readme/screenshot3.jpg"> |
 
-### Show some :heart: and star the repo to support the project
+## What’s In This Document
 
-[![GitHub stars](https://img.shields.io/github/stars/ShivamGoyal1899/BHIM.svg?style=social&label=Star)](https://github.com/ShivamGoyal1899/BHIM)
-[![GitHub forks](https://img.shields.io/github/forks/ShivamGoyal1899/BHIM.svg?style=social&label=Fork)](https://github.com/ShivamGoyal1899/BHIM/fork)
-[![GitHub watchers](https://img.shields.io/github/watchers/ShivamGoyal1899/BHIM.svg?style=social&label=Watch)](https://github.com/ShivamGoyal1899/BHIM)
-[![GitHub followers](https://img.shields.io/github/followers/ShivamGoyal1899.svg?style=social&label=Follow)](https://github.com/ShivamGoyal1899)
-[![Twitter Follow](https://img.shields.io/twitter/follow/ShivamGoyal1899.svg?style=social)](https://twitter.com/ShivamGoyal1899)
+- [Get Up and Running in 5 Minutes](#rocket-get-up-and-running-in-5-minutes)
+- [Flutter / Dart Packages Used](#ballot_box-flutter--dart-packages-used)
+- [Versioning](#label-versioning)
+- [Queries / Bugs](#question-queries--bugs)
+- [License](#memo-license)
+- [Thanks to Contributors and Sponsors](#purple_heart-thanks)
 
-[![Open Source Love](https://img.shields.io/badge/Open%20Source-seagreen?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![License](https://img.shields.io/badge/license-MIT-red.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![Repo Size](https://img.shields.io/github/repo-size/ShivamGoyal1899/BHIM?style=for-the-badge)](https://github.com/ShivamGoyal1899/BHIM)
-[![Release](https://img.shields.io/github/v/release/ShivamGoyal1899/BHIM?style=for-the-badge&include_prereleases&sort=semver)](https://github.com/ShivamGoyal1899/BHIM/releases/download/v0.9.0-beta/BHIM.v0.9.0-beta.apk)
+## :rocket: Get Up and Running in 5 Minutes
 
+You can get the BHIM App up and running on your local dev environment in 5 minutes with these four steps:
 
-## Download Android App
-[![here](https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://matheusitsolution.com/wp-content/themes/matheus/images/downloadapp.png)](https://github.com/ShivamGoyal1899/BHIM/releases/download/v0.9.0-beta/BHIM.v0.9.0-beta.apk)
+1. **Install the Flutter SDK & Android Studio. [Instructions](https://medium.com/enappd/install-flutter-on-windows-and-mac-1fd1dde453ba).**
 
-## Tech Stack
-* Flutter
-* InHouse Blockchain Database
-* InHosue Voice Recognition API
-* InHouse Intent Recognition API
-* Infinit UPI Platform
+2. **Open Terminal & navigate to the root directory of the project.**
 
-## API Hosting
-* Amazon Lightsail
-* Heroku
+    ```shell
+    cd BHIM
+    ```
 
-## Flutter Packages Used
-* url_launcher: ^5.2.5
-* local_auth: ^0.6.0+1
-* flutter_lock_screen: ^1.0.6
-* android_device_info: ^1.0.0
-* font_awesome_flutter: ^8.5.0
-* barcode_scan: ^1.0.0
-* qr_flutter: ^3.1.0
-* path_provider: ^1.4.0
-* screenshot_and_share: ^0.0.2
-* speech_recognition: ^0.3.0
-* scratcher: ^1.2.1
-* http: ^0.12.0
-* permission_handler: ^4.0.0
-* native_contact_picker: ^0.0.6
-* simple_rsa: ^0.0.5
-* random_string: ^1.1.0
+3. **Run and launch the build on preferred device.**
 
-## Versioning
-We've used [Semantic Versioning 2.0.0](https://semver.org/) for versioning throughout the app.
+   ```shell
+   flutter run
+   ```
 
-## Project Created & Maintained By __Shivam Goyal__
+4. **Open the source code and start editing!**
 
-<a href="https://shivamgoyal.co"><img src="https://shivamgoyal.co/credits.png" width="60"></a>
-<a href="https://medium.com/@ShivamGoyal1899"><img src="https://github.com/aritraroy/social-icons/blob/master/medium-icon.png?raw=true" width="60"></a>
-<a href="https://twitter.com/ShivamGoyal1899"><img src="https://github.com/aritraroy/social-icons/blob/master/twitter-icon.png?raw=true" width="60"></a>
-<a href="https://linkedin.com/in/ShivamGoyal1899"><img src="https://github.com/aritraroy/social-icons/blob/master/linkedin-icon.png?raw=true" width="60"></a>
-<a href="https://facebook.com/ShivamGoyal1899"><img src="https://github.com/aritraroy/social-icons/blob/master/facebook-icon.png?raw=true" width="60"></a>
-<a href="https://instagram.com/shivamgoyal.co"><img src="https://github.com/aritraroy/social-icons/blob/master/instagram-icon.png?raw=true" width="60"></a>
+   Your app is now running on your physical device or emulator. Open the `lib` directory in Android Studio itself and edit `*.dart` files. Hot Reload your changes, and the app will update in real time!
 
-## Main Collaborators - Team AeroCoders
+At this point, you’ve got the fully functional BHIM App running. For additional information on how you can customize your Flutter Apps, see [Google Codelabs](https://codelabs.developers.google.com/codelabs/flutter/) and [HackerNoon Guide](https://hackernoon.com/making-the-most-of-flutter-from-basics-to-customization-433171581d01).
 
-### [Utkarsh Mishra](https://github.com/utkarsh1148) (Blockchain Dev)
-### [Mankaran Singh](https://github.com/MankaranSingh) (ML Dev)
+## :ballot_box: Flutter / Dart Packages Used
+|    Package Name    	| Package Version 	|                           Package URL                          	|
+|:------------------:	|:---------------:	|:--------------------------------------------------------------:	|
+| url_launcher       	|      latest     	| [Open on pub.dev](https://pub.dev/packages/url_launcher)    	    |
+| font_awesome_flutter	|      latest     	| [Open on pub.dev](https://pub.dev/packages/font_awesome_flutter)  |
+| barcode_scan    	    |      latest     	| [Open on pub.dev](https://pub.dev/packages/barcode_scan)          |
+| qr_flutter 	        |      latest     	| [Open on pub.dev](https://pub.dev/packages/qr_flutter)            |
+| path_provider     	|      latest     	| [Open on pub.dev](https://pub.dev/packages/path_provider)         |
+| screenshot_and_share 	|      latest     	| [Open on pub.dev](https://pub.dev/packages/screenshot_and_share)  |
+| speech_recognition 	|      latest     	| [Open on pub.dev](https://pub.dev/packages/speech_recognition) 	|
+| scratcher          	|      latest     	| [Open on pub.dev](https://pub.dev/packages/scratcher)             |
+| http               	|      latest     	| [Open on pub.dev](https://pub.dev/packages/http)              	|
+| permission_handler  	|      latest     	| [Open on pub.dev](https://pub.dev/packages/permission_handler)    |
+| native_contact_picker	|      latest     	| [Open on pub.dev](https://pub.dev/packages/native_contact_picker) |
+| simple_rsa        	|      latest     	| [Open on pub.dev](https://pub.dev/packages/simple_rsa)            |
+| random_string     	|      latest     	| [Open on pub.dev](https://pub.dev/packages/random_string)         |
+| shared_preferences  	|      latest     	| [Open on pub.dev](https://pub.dev/packages/shared_preferences)    |
+| recase     	        |      latest     	| [Open on pub.dev](https://pub.dev/packages/recase)                |
+| file              	|      latest     	| [Open on pub.dev](https://pub.dev/packages/file)                  |
+| file_picker          	|      latest     	| [Open on pub.dev](https://pub.dev/packages/file_picker)           |
+| typed_data          	|      latest     	| [Open on pub.dev](https://pub.dev/packages/typed_data)            |
+| audio_recorder     	|      latest     	| [Open on pub.dev](https://pub.dev/packages/audio_recorder)     	|
 
-## Found this project useful?
+## :label: Versioning
+I've used [Semantic Versioning 2.0.0](https://semver.org/) for versioning throughout the project.
 
-If you found this project useful, then please consider giving it a :star: on Github and sharing it with your friends via social media.
+## :question: Queries / Bugs
+If you got any queries or found a bug, open an [Issue](https://github.com/ShivamGoyal1899/EcoJourney/issues/new) or ping me over on [hi@itsshivam.com](mailto:hi@itsshivam.com)
 
-## Got any Queries?
-If you got any queries or found a bug create a PR or ping me over on [hi@shivamgoyal.co](mailto:hi@shivamgoyal.co)
+## :memo: License
+Licensed under the [MIT License](./LICENSE).
 
-## Found me generous?
+## :purple_heart: Thanks
 
-If you learned even a thing or two and want to thank me, consider buying me a drink :beer:
-
-[![Paypal](https://img.shields.io/badge/Sponsor-Paypal-informational?style=for-the-badge&logo=paypal)](https://www.paypal.me/shivamgoyal1899)
-
-## License
-
-```
-MIT License
-
-Copyright (c) 2019 Shivam Goyal
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-```
+Thanks to all contributors and to sponsors for supporting the project.
